@@ -189,7 +189,7 @@ The resources below are enough to start productively without overloading the fir
 ## 🤝 How We'll Work Together
 
 **Check-ins:** During our biweekly 45-minute AI Studio Lab Section meeting block (2nd and 4th week of every month)  
-**Communication:** Discord (Break Through Tech workspace) or email  
+**Communication:** Discord (Break Through Tech workspace) or Email: tom.mathews@nyu.edu  
 **Response time:** Within 48 hours on weekdays
 
 **Recommended Tools**
