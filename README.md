@@ -56,6 +56,7 @@ Training happens once on labeled corpora. Inference should run on new threads wi
 | `Getting-Started-for-Fellows.md` | BTT orientation and initial repo guidance | Challenge Advisor / Fellows |
 | `README.md` | Living project home, progress log, and final portfolio artifact | Fellows |
 | `notebooks/` | EDA, modeling, evaluation, and demo notebooks | Fellows |
+| `utils/` | Helper modules | Fellows |
 | `data/` | Small metadata files, data dictionaries, or links to external datasets | Fellows |
 | `pyproject.toml` / `uv.lock` | Python package metadata, dependency groups, and locked environment once package scaffolding is added | Fellows |
 | `requirements.txt` | Legacy scaffold file from the template; migrate dependencies to `pyproject.toml` and `uv.lock` before adding project packages | Fellows |
@@ -67,7 +68,7 @@ As the toolkit grows, use package and test directories such as `src/` and `tests
 
 | Name | GitHub Handle | Primary Contribution |
 |---|---|---|
-| TBD | TBD | TBD |
+| Sonia Tyburczy | soniatyburczy | TBD |
 | TBD | TBD | TBD |
 | TBD | TBD | TBD |
 | TBD | TBD | TBD |

@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>readme</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="README_files/libs/clipboard/clipboard.min.js"></script>
+<script src="README_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="README_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="README_files/libs/quarto-html/popper.min.js"></script>
+<script src="README_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="README_files/libs/quarto-html/anchor.min.js"></script>
+<link href="README_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="README_files/libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="README_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="README_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="README_files/libs/bootstrap/bootstrap-917079515d91bccb85b543faf8aa8bb6.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+
+
+
+<section id="discussion-intelligence-toolkit" class="level1">
+<h1>Discussion Intelligence Toolkit</h1>
+<p>An open-source Python toolkit for turning long asynchronous discussions into structured, evidence-linked insight reports.</p>
+<p>This repository is both the team’s working project space and the final public portfolio artifact. Students will build the package, notebooks, experiments, evaluation results, documentation, and final report here throughout Break Through Tech AI Studio Fall 2026. Keep this README current as the project evolves; by December, it should read as the project’s public technical report.</p>
+<section id="start-here" class="level2">
+<h2 class="anchored" data-anchor-id="start-here">Start Here</h2>
+<ol type="1">
+<li>Read <code>Challenge-Project-Overview.md</code> for the full challenge brief, milestones, and advisor expectations.</li>
+<li>Create or review the GitHub Projects board for monthly milestone tracking.</li>
+<li>Use <code>notebooks/</code> for exploration, modeling, and demo notebooks.</li>
+<li>Use <code>data/</code> only for small metadata files or documented pointers. Do not commit large raw datasets, model checkpoints, API keys, or <code>.env</code> files.</li>
+<li>Track setup blockers, modeling decisions, and evaluation questions as GitHub issues.</li>
+<li>Update this README whenever the team changes datasets, modeling approach, metrics, or project scope.</li>
+</ol>
+</section>
+<section id="what-we-are-building" class="level2">
+<h2 class="anchored" data-anchor-id="what-we-are-building">What We Are Building</h2>
+<p>Long Reddit, forum, Discord, GitHub, and community discussions contain product, research, and operational signal that is expensive to extract manually. This project builds a Python toolkit that ingests threaded conversations and produces structured reports showing:</p>
+<ul>
+<li>the main claims and arguments in a discussion</li>
+<li>the comments that support each claim</li>
+<li>discourse-act labels such as question, answer, agreement, disagreement, humor, and elaboration</li>
+<li>argument-quality or discussion-quality scores</li>
+<li>discovered topic clusters</li>
+<li>retrieval-grounded LLM summaries that cite evidence from the source thread</li>
+</ul>
+<p>The intended December deliverable is a real installable toolkit, not a one-off notebook. A successful project should be understandable, runnable, and extensible by someone outside the team.</p>
+</section>
+<section id="project-architecture" class="level2">
+<h2 class="anchored" data-anchor-id="project-architecture">Project Architecture</h2>
+<pre class="mermaid"><code>flowchart TD
+    A[Thread input] --&gt; B[Connector]
+    B --&gt; C[Canonical schema: Conversation, Utterance, Speaker]
+    C --&gt; D[Per-utterance analysis]
+    D --&gt; E[Discourse classifier]
+    D --&gt; F[Quality scorer]
+    D --&gt; G[Sentence embeddings]
+    E --&gt; H[Enriched utterances]
+    F --&gt; H
+    G --&gt; H
+    H --&gt; I[Topic clustering]
+    H --&gt; J[Vector index]
+    I --&gt; K[LLM synthesis]
+    J --&gt; K
+    K --&gt; L[Insight report with cited evidence]</code></pre>
+<p>Training happens once on labeled corpora. Inference should run on new threads without retraining. The connector layer keeps source-specific parsing separate from the rest of the toolkit, so a future contributor can add Hacker News, GitHub Discussions, Discord exports, or another threaded source without rewriting the pipeline.</p>
+</section>
+<section id="repository-map" class="level2">
+<h2 class="anchored" data-anchor-id="repository-map">Repository Map</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Path</th>
+<th>Purpose</th>
+<th>Owner</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>Challenge-Project-Overview.md</code></td>
+<td>Challenge brief, milestones, resources, advisor expectations</td>
+<td>Challenge Advisor</td>
+</tr>
+<tr class="even">
+<td><code>Getting-Started-for-Fellows.md</code></td>
+<td>BTT orientation and initial repo guidance</td>
+<td>Challenge Advisor / Fellows</td>
+</tr>
+<tr class="odd">
+<td><code>README.md</code></td>
+<td>Living project home, progress log, and final portfolio artifact</td>
+<td>Fellows</td>
+</tr>
+<tr class="even">
+<td><code>notebooks/</code></td>
+<td>EDA, modeling, evaluation, and demo notebooks</td>
+<td>Fellows</td>
+</tr>
+<tr class="odd">
+<td><code>utils/</code></td>
+<td>Helper modules</td>
+<td>Fellows</td>
+</tr>
+<tr class="even">
+<td><code>data/</code></td>
+<td>Small metadata files, data dictionaries, or links to external datasets</td>
+<td>Fellows</td>
+</tr>
+<tr class="odd">
+<td><code>pyproject.toml</code> / <code>uv.lock</code></td>
+<td>Python package metadata, dependency groups, and locked environment once package scaffolding is added</td>
+<td>Fellows</td>
+</tr>
+<tr class="even">
+<td><code>requirements.txt</code></td>
+<td>Legacy scaffold file from the template; migrate dependencies to <code>pyproject.toml</code> and <code>uv.lock</code> before adding project packages</td>
+<td>Fellows</td>
+</tr>
+<tr class="odd">
+<td><code>.gitignore</code></td>
+<td>Files that must stay out of version control</td>
+<td>Fellows</td>
+</tr>
+</tbody>
+</table>
+<p>As the toolkit grows, use package and test directories such as <code>src/</code> and <code>tests/</code> rather than keeping production code only in notebooks.</p>
+</section>
+<section id="team-members" class="level2">
+<h2 class="anchored" data-anchor-id="team-members">Team Members</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>GitHub Handle</th>
+<th>Primary Contribution</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Sonia Tyburczy</td>
+<td>soniatyburczy</td>
+<td>TBD</td>
+</tr>
+<tr class="even">
+<td>TBD</td>
+<td>TBD</td>
+<td>TBD</td>
+</tr>
+<tr class="odd">
+<td>TBD</td>
+<td>TBD</td>
+<td>TBD</td>
+</tr>
+<tr class="even">
+<td>TBD</td>
+<td>TBD</td>
+<td>TBD</td>
+</tr>
+</tbody>
+</table>
+<p>Update this table as responsibilities become clear. Contributions should name concrete ownership such as connector implementation, EDA, model training, evaluation harness, packaging, documentation, or final demo.</p>
+</section>
+<section id="project-highlights" class="level2">
+<h2 class="anchored" data-anchor-id="project-highlights">Project Highlights</h2>
+<p>Keep this section current as the project matures. By the final submission, it should summarize the strongest technical outcomes.</p>
+<ul>
+<li>Built a Python toolkit for converting threaded discussions into evidence-linked insight reports.</li>
+<li>Implemented a connector-based ingestion architecture for asynchronous discussion data.</li>
+<li>Evaluated discourse-act classification using macro F1 on labeled conversation corpora.</li>
+<li>Evaluated argument-quality or discussion-quality scoring using regression and rank-correlation metrics.</li>
+<li>Used clustering and retrieval to ground LLM-generated summaries in source comments.</li>
+<li>Produced a reproducible demo that runs on free-tier student-accessible compute.</li>
+</ul>
+<p>Replace or refine these bullets with measured results once the team has them.</p>
+</section>
+<section id="setup-and-installation" class="level2">
+<h2 class="anchored" data-anchor-id="setup-and-installation">Setup and Installation</h2>
+<p>Use <code>uv</code> for local Python environments, dependency management, and project commands. Do not install project dependencies with <code>pip</code> directly.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/Break-Through-Tech/Other-AI_Powered_Discussion_Intelligence_Toolkit.git</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> Other-AI_Powered_Discussion_Intelligence_Toolkit</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> sync</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> run python <span class="at">-m</span> ipykernel install <span class="at">--user</span> <span class="at">--name</span> discussion-intelligence</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Once the package structure exists, common commands should use <code>uv run</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> run pytest</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> run python <span class="at">-m</span> discussion_intelligence</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>For Colab, keep notebook setup cells aligned with the locked <code>uv</code> environment. If Colab needs one-off install cells before the package is fully scaffolded, mirror every dependency in <code>pyproject.toml</code> and refresh <code>uv.lock</code> locally so the repo remains reproducible.</p>
+</section>
+<section id="development-workflow" class="level2">
+<h2 class="anchored" data-anchor-id="development-workflow">Development Workflow</h2>
+<ul>
+<li>Use GitHub issues for tasks, questions, bugs, and experiment follow-ups.</li>
+<li>Use branches for substantial changes.</li>
+<li>Use <code>uv add</code>, <code>uv remove</code>, <code>uv sync</code>, and <code>uv run</code> for Python dependency and command workflows.</li>
+<li>Keep notebooks runnable from top to bottom.</li>
+<li>Move reusable code from notebooks into Python modules when it is used in more than one place.</li>
+<li>Record major design decisions in this README or a linked design note.</li>
+<li>Do not commit raw bulk data, private credentials, <code>.env</code> files, generated model checkpoints, or local cache directories.</li>
+<li>Prefer measured comparisons over intuition when choosing models, prompts, or preprocessing steps.</li>
+</ul>
+</section>
+<section id="project-overview" class="level2">
+<h2 class="anchored" data-anchor-id="project-overview">Project Overview</h2>
+<p>Break Through Tech AI Studio teams will build an NLP system that extracts structured insight from online threaded conversations. The project combines supervised classification, regression or scoring, embedding-based clustering, retrieval, and LLM synthesis in one coherent pipeline.</p>
+<p>The core design goal is transferability: students should finish with a package they can install, demo, explain in interviews, and extend after the program. The toolkit should expose clear contracts for conversation schemas, connectors, model components, and final reports.</p>
+</section>
+<section id="data" class="level2">
+<h2 class="anchored" data-anchor-id="data">Data</h2>
+<p>The project is designed around public threaded-discussion data and labeled conversation corpora.</p>
+<p>Primary data sources and roles:</p>
+<ul>
+<li>Pushshift Reddit dumps: bulk threaded discussion data for EDA, connector development, and end-to-end analysis.</li>
+<li>ConvoKit Coarse Discourse Corpus: labeled Reddit utterances for discourse-act classification.</li>
+<li>ConvoKit CGA-CMV: ChangeMyView discussion data for quality or derailment-related modeling.</li>
+<li>Optional stretch sources: Hacker News, GitHub Discussions, Discord exports, podcast transcripts, or other threaded discussion formats.</li>
+</ul>
+<p>Document the team’s selected data sources here:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Dataset</th>
+<th>Source</th>
+<th style="text-align: right;">Format</th>
+<th style="text-align: right;">Size</th>
+<th>Purpose</th>
+<th>Access Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>TBD</td>
+<td>TBD</td>
+<td style="text-align: right;">TBD</td>
+<td style="text-align: right;">TBD</td>
+<td>TBD</td>
+<td>TBD</td>
+</tr>
+</tbody>
+</table>
+<p>Data exploration should report:</p>
+<ul>
+<li>selected subreddit or discussion-domain verticals</li>
+<li>number of submissions, comments, threads, speakers, and utterances retained</li>
+<li>thread length and depth distributions</li>
+<li>deleted, removed, empty, or orphaned comment rates</li>
+<li>language, markdown, and text-cleaning decisions</li>
+<li>train/dev/test split strategy and leakage controls</li>
+</ul>
+</section>
+<section id="model-development" class="level2">
+<h2 class="anchored" data-anchor-id="model-development">Model Development</h2>
+<p>Use a modeling ladder. Start with simple baselines, then add complexity only when evaluation shows the baseline is insufficient.</p>
+<p>Recommended progression:</p>
+<ol type="1">
+<li>Majority-class or constant-score baseline.</li>
+<li>TF-IDF plus logistic regression or linear regression.</li>
+<li>Sentence-transformer embeddings plus a simple classifier, regressor, or clustering model.</li>
+<li>Fine-tuned DistilBERT or another compact transformer for supervised tasks.</li>
+<li>Retrieval-grounded LLM synthesis after evidence extraction and retrieval are working.</li>
+</ol>
+<p>Document each model experiment:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Date</th>
+<th>Task</th>
+<th>Model</th>
+<th>Data Split</th>
+<th>Metric</th>
+<th style="text-align: right;">Result</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>TBD</td>
+<td>TBD</td>
+<td>TBD</td>
+<td>TBD</td>
+<td>TBD</td>
+<td style="text-align: right;">TBD</td>
+<td>TBD</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="evaluation-plan" class="level2">
+<h2 class="anchored" data-anchor-id="evaluation-plan">Evaluation Plan</h2>
+<p>Use task-specific metrics. Do not rely on generic accuracy alone.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Component</th>
+<th>Primary Metrics</th>
+<th>What the Metric Checks</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Discourse-act classifier</td>
+<td>Macro F1, per-class F1, confusion matrix</td>
+<td>Whether minority discourse labels are handled well</td>
+</tr>
+<tr class="even">
+<td>Quality scorer</td>
+<td>MAE, Spearman correlation</td>
+<td>Whether predicted scores match level and ranking</td>
+</tr>
+<tr class="odd">
+<td>Topic clustering</td>
+<td>Silhouette score, sampled cluster coherence review</td>
+<td>Whether clusters are separated and interpretable</td>
+</tr>
+<tr class="even">
+<td>Retrieval</td>
+<td>Recall@k on hand-written thread questions</td>
+<td>Whether cited evidence can be retrieved</td>
+</tr>
+<tr class="odd">
+<td>LLM synthesis</td>
+<td>Claim coverage, evidence-link accuracy, hallucination rate</td>
+<td>Whether reports are useful and grounded</td>
+</tr>
+</tbody>
+</table>
+<p>For the final system, build a small held-out set of manually reviewed threads. Score final reports against human-written insight digests for claim coverage, evidence accuracy, and hallucination rate.</p>
+</section>
+<section id="results-and-key-findings" class="level2">
+<h2 class="anchored" data-anchor-id="results-and-key-findings">Results and Key Findings</h2>
+<p>Update this section throughout the project. Include both successful and failed experiments when they changed the team’s direction.</p>
+<p>Recommended result artifacts:</p>
+<ul>
+<li>EDA charts for thread size, depth, score, and label distributions</li>
+<li>baseline metrics before transformer fine-tuning</li>
+<li>final model comparison table</li>
+<li>error analysis examples</li>
+<li>retrieval examples showing query, retrieved comments, and missing evidence</li>
+<li>final insight-report examples with cited utterance IDs</li>
+</ul>
+</section>
+<section id="final-demo-requirements" class="level2">
+<h2 class="anchored" data-anchor-id="final-demo-requirements">Final Demo Requirements</h2>
+<p>The final demo should show the complete path from input thread to structured report:</p>
+<ol type="1">
+<li>Load or ingest a threaded discussion.</li>
+<li>Normalize it into the canonical conversation schema.</li>
+<li>Run discourse, quality, embedding, clustering, and retrieval components.</li>
+<li>Generate an insight report.</li>
+<li>Show that each major claim links back to source comments.</li>
+<li>Explain the evaluation results and remaining limitations.</li>
+</ol>
+<p>The demo should run on student-accessible compute such as Google Colab.</p>
+</section>
+<section id="milestones" class="level2">
+<h2 class="anchored" data-anchor-id="milestones">Milestones</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Month</th>
+<th>Focus</th>
+<th>Expected Outcomes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>September</td>
+<td>Data understanding and baselines</td>
+<td>EDA, cleaned schema, baseline models, initial evaluation harness</td>
+</tr>
+<tr class="even">
+<td>October</td>
+<td>Modeling</td>
+<td>Discourse classifier, quality scorer, topic clustering, model comparisons</td>
+</tr>
+<tr class="odd">
+<td>November</td>
+<td>Integration</td>
+<td>End-to-end <code>analyze(thread)</code> pipeline, retrieval, LLM synthesis, package structure</td>
+</tr>
+<tr class="even">
+<td>December</td>
+<td>Polish and presentation</td>
+<td>Final report, reproducible demo, recorded walkthrough, documented next steps</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="next-steps" class="level2">
+<h2 class="anchored" data-anchor-id="next-steps">Next Steps</h2>
+<p>Track project-specific next steps here. Early candidates:</p>
+<ul>
+<li>Select target subreddit or discussion-domain verticals.</li>
+<li>Define the canonical conversation schema.</li>
+<li>Build or adopt a starter connector.</li>
+<li>Run first EDA on reconstructed threads.</li>
+<li>Establish baseline metrics before fine-tuning.</li>
+<li>Decide how final reports will cite supporting utterances.</li>
+</ul>
+</section>
+<section id="license" class="level2">
+<h2 class="anchored" data-anchor-id="license">License</h2>
+<p>License decision pending advisor and program approval. Document the chosen license here before final publication.</p>
+</section>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
+<p>Add references as the team uses them. Expected categories:</p>
+<ul>
+<li>Break Through Tech AI Studio project materials</li>
+<li>ConvoKit documentation and papers</li>
+<li>Pushshift or Reddit dataset documentation</li>
+<li>Hugging Face Transformers documentation</li>
+<li>sentence-transformers documentation</li>
+<li>scikit-learn documentation</li>
+<li>papers or articles on discourse analysis, argument mining, retrieval-augmented generation, and grounded summarization</li>
+</ul>
+</section>
+<section id="acknowledgements" class="level2">
+<h2 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h2>
+<p>Thank the Break Through Tech AI Studio program team, AI Studio Coach, Challenge Advisor, and contributors who supported the project.</p>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
