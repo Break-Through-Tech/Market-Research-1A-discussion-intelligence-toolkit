@@ -368,6 +368,32 @@ The existing automated test suite passed all 36 tests.
 
 
 
+## Held-Out Test Evaluation
+
+The development-selected context-aware classifier was evaluated
+once on the held-out test split without further hyperparameter tuning.
+
+| Metric | Development | Held-Out Test |
+|---|---:|---:|
+| Accuracy | 0.5565 | 0.5604 |
+| Macro F1 | 0.4183 | 0.4214 |
+| Weighted F1 | 0.5623 | 0.5622 |
+
+The held-out test split contains 9,555 examples from conversations
+separate from those in the training and development splits.
+
+The close agreement between development and test results indicates
+consistent performance on the held-out conversations.
+
+The full per-class report is available at:
+`results/heldout_test_report.txt`
+
+The model still has limitations, especially for disagreement,
+humor, and negative_reaction. Results may differ on other datasets
+or Reddit communities.
+
+
+
 \## Next Steps
 
 
