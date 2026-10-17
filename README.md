@@ -56,8 +56,10 @@ Training happens once on labeled corpora. Inference should run on new threads wi
 | `Getting-Started-for-Fellows.md` | BTT orientation and initial repo guidance | Challenge Advisor / Fellows |
 | `README.md` | Living project home, progress log, and final portfolio artifact | Fellows |
 | `notebooks/` | EDA, modeling, evaluation, and demo notebooks | Fellows |
-| `utils/` | Helper modules | Fellows |
-| `data/` | Small metadata files, data dictionaries, or links to external datasets | Fellows |
+| `utils/` | Helper modules, including `utils/modeling_data/` (modeling datasets and splits) | Fellows |
+| `data/` | Small metadata files, data dictionaries, links to external datasets, and tracked split manifests in `data/splits/` | Fellows |
+| `docs/` | Design notes, e.g. `docs/modeling-datasets.md` | Fellows |
+| `tests/` | Pytest suite (`uv run --no-project --with pydantic --with pytest pytest tests`) | Fellows |
 | `pyproject.toml` / `uv.lock` | Python package metadata, dependency groups, and locked environment once package scaffolding is added | Fellows |
 | `requirements.txt` | Legacy scaffold file from the template; migrate dependencies to `pyproject.toml` and `uv.lock` before adding project packages | Fellows |
 | `.gitignore` | Files that must stay out of version control | Fellows |
@@ -150,6 +152,8 @@ Data exploration should report:
 - deleted, removed, empty, or orphaned comment rates
 - language, markdown, and text-cleaning decisions
 - train/dev/test split strategy and leakage controls
+
+The Coarse Discourse modeling splits, label mapping, and leakage checks are documented in `docs/modeling-datasets.md`.
 
 ## Model Development
 

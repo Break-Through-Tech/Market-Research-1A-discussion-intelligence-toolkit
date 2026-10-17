@@ -64,6 +64,24 @@ The prepared starter notebook identifies these static Hugging Face datasets:
 
 They are not approved as input to the current `RedditDumpConnector`. On 2026-08-18, the published comments schema exposed `link_id` but not `parent_id`; the connector requires `parent_id` to reconstruct nested replies. Select a parent-preserving export and validate its schema before using it for end-to-end thread analysis.
 
+## Modeling datasets and splits
+
+`utils/modeling_data/` turns the downloaded Coarse Discourse corpus into canonical `Conversation` records and leakage-checked train/dev/test files for discourse-act classification. See [`docs/modeling-datasets.md`](../docs/modeling-datasets.md) for the design and the full numbers.
+
+```text
+uv run --no-project --with pydantic python -m utils.modeling_data.build \
+    --corpus-dir ~/.convokit/saved-corpora/reddit-coarse-discourse-corpus
+```
+
+Generated files go to `data/processed/coarse_discourse/` (gitignored). Two small files are tracked in `data/splits/` so everyone evaluates on the same threads:
+
+| File | Contents |
+|---|---|
+| `coarse_discourse_split_manifest.csv` | `conversation_id, subreddit, split` for all 9,483 threads |
+| `coarse_discourse_dataset_card.json` | Build config, input hash, label map, counts per split and label, exclusions, leakage-check results |
+
+Load the prepared splits from Python with `utils.modeling_data.build.load_prepared_splits()`; it returns the same `ClassificationSplits` type as `CoarseDiscourseLoader`.
+
 ## Repository and source constraints
 
 Do not commit large corpora, private data, API keys, model checkpoints, or generated local parquet files. Record the source URL, retrieval date, selected communities, retained-record counts, split strategy, and relevant source terms for every corpus used beyond this reference sample. The upstream source's terms govern corpus access and redistribution.
