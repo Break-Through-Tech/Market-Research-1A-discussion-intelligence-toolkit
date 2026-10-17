@@ -70,7 +70,7 @@ As the toolkit grows, use package and test directories such as `src/` and `tests
 
 | Name | GitHub Handle | Primary Contribution |
 |---|---|---|
-| Sonia Tyburczy | soniatyburczy | TBD |
+| Franceli Gonzalez | francelivgonzalez | TBD |
 | TBD | TBD | TBD |
 | TBD | TBD | TBD |
 | TBD | TBD | TBD |
