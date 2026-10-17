@@ -1,0 +1,4 @@
+model,accuracy,macro_f1,weighted_f1
+A_text_only,0.4972,0.3590,0.4849
+B_parent_available,0.5091,0.3887,0.5018
+C_parent_text,0.5565,0.4183,0.5623

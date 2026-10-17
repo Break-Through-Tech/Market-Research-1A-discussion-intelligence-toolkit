@@ -1,0 +1,8 @@
+Context Experiment Results
+Text-only accuracy: 0.4972
+Text-only macro F1: 0.3590
+Text-only weighted F1: 0.4849
+Context accuracy: 0.5565
+Context macro F1: 0.4183
+Context weighted F1: 0.5623
+Macro F1 difference: +0.0593

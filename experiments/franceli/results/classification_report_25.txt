@@ -1,0 +1,15 @@
+                   precision    recall  f1-score   support
+
+        agreement       0.51      0.33      0.40       526
+     announcement       0.25      0.18      0.21       146
+           answer       0.54      0.76      0.63      4026
+     appreciation       0.79      0.62      0.69       926
+     disagreement       0.25      0.10      0.14       342
+      elaboration       0.32      0.17      0.22      1885
+            humor       0.17      0.11      0.13       191
+negative_reaction       0.25      0.22      0.23       158
+         question       0.54      0.50      0.52      1540
+
+         accuracy                           0.52      9740
+        macro avg       0.40      0.33      0.35      9740
+     weighted avg       0.49      0.52      0.49      9740
