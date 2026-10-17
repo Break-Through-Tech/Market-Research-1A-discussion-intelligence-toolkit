@@ -1,0 +1,173 @@
+{
+  "dataset": "coarse_discourse",
+  "dataset_version": "1.0",
+  "task": "utterance-level discourse-act classification",
+  "source": {
+    "corpus": "reddit-coarse-discourse-corpus",
+    "url": "https://convokit.cornell.edu/documentation/coarseDiscourse.html",
+    "utterances_sha256": "88f26d3f7e5b530c67cb2bca4efbe144941715b30e00207586b883f2ca93a605"
+  },
+  "config": {
+    "seed": 42,
+    "dev_frac": 0.1,
+    "test_frac": 0.1,
+    "group_key": "conversation_id (raw Reddit root ID)",
+    "subreddits": "all",
+    "pseudonymize_speakers": true,
+    "schema_version": "1.0",
+    "label_map_version": "1.0"
+  },
+  "label_map": {
+    "question": "question",
+    "answer": "answer",
+    "announcement": "announcement",
+    "agreement": "agreement",
+    "disagreement": "disagreement",
+    "appreciation": "appreciation",
+    "elaboration": "elaboration",
+    "humor": "humor",
+    "negativereaction": "negative_reaction",
+    "other": "other"
+  },
+  "modeling_labels": [
+    "agreement",
+    "announcement",
+    "answer",
+    "appreciation",
+    "disagreement",
+    "elaboration",
+    "humor",
+    "negative_reaction",
+    "question"
+  ],
+  "dropped_labels": [
+    "other"
+  ],
+  "normalization": {
+    "conversations": 9483,
+    "utterances": 115827,
+    "orphans_reparented": 207,
+    "deleted_text": 1017,
+    "empty_text": 2575,
+    "deleted_authors": 13682,
+    "missing_timestamps": 115827,
+    "skipped_conversations_without_root": 0,
+    "conversations_filtered_by_subreddit": 0
+  },
+  "exclusions": {
+    "deleted_text": 928,
+    "dropped_label": 2049,
+    "empty_text": 2268,
+    "no_majority_label": 12277
+  },
+  "counts": {
+    "train": {
+      "conversations": 7584,
+      "conversation_share": 0.7997,
+      "examples": 79010,
+      "labels": {
+        "agreement": 3968,
+        "announcement": 1130,
+        "answer": 32561,
+        "appreciation": 6816,
+        "disagreement": 2684,
+        "elaboration": 15201,
+        "humor": 1899,
+        "negative_reaction": 1525,
+        "question": 13226
+      }
+    },
+    "dev": {
+      "conversations": 952,
+      "conversation_share": 0.1004,
+      "examples": 9740,
+      "labels": {
+        "agreement": 526,
+        "announcement": 146,
+        "answer": 4026,
+        "appreciation": 926,
+        "disagreement": 342,
+        "elaboration": 1885,
+        "humor": 191,
+        "negative_reaction": 158,
+        "question": 1540
+      }
+    },
+    "test": {
+      "conversations": 947,
+      "conversation_share": 0.0999,
+      "examples": 9555,
+      "labels": {
+        "agreement": 476,
+        "announcement": 139,
+        "answer": 3953,
+        "appreciation": 815,
+        "disagreement": 344,
+        "elaboration": 1794,
+        "humor": 258,
+        "negative_reaction": 189,
+        "question": 1587
+      }
+    }
+  },
+  "total_examples": 98305,
+  "leakage": {
+    "ok": true,
+    "checks": [
+      {
+        "name": "conversation_disjoint",
+        "status": "pass",
+        "detail": "9397 conversations, each in exactly one split",
+        "data": {}
+      },
+      {
+        "name": "example_disjoint",
+        "status": "pass",
+        "detail": "98305 unique example IDs",
+        "data": {}
+      },
+      {
+        "name": "manifest_consistency",
+        "status": "pass",
+        "detail": "all examples match the split manifest",
+        "data": {}
+      },
+      {
+        "name": "label_coverage",
+        "status": "pass",
+        "detail": "all 9 labels present in every split",
+        "data": {}
+      },
+      {
+        "name": "label_distribution",
+        "status": "pass",
+        "detail": "max label-proportion gap vs train: dev=0.0093, test=0.0046 (warn above 0.02)",
+        "data": {
+          "max_gap": {
+            "dev": 0.0093,
+            "test": 0.0046
+          }
+        }
+      },
+      {
+        "name": "text_overlap",
+        "status": "pass",
+        "detail": "dev: 149 (1.53%) verbatim in train, 0 with >= 8 tokens, test: 156 (1.63%) verbatim in train, 0 with >= 8 tokens",
+        "data": {
+          "dev": {
+            "overlapping_examples": 149,
+            "overlap_rate": 0.0153,
+            "long_overlaps": 0,
+            "long_overlap_samples": []
+          },
+          "test": {
+            "overlapping_examples": 156,
+            "overlap_rate": 0.0163,
+            "long_overlaps": 0,
+            "long_overlap_samples": []
+          }
+        }
+      }
+    ]
+  }
+}
