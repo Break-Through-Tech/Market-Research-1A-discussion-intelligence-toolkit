@@ -1,1 +1,6 @@
+/.convokit/
 
+# Generated modeling datasets (rebuild with: python -m utils.modeling_data.build)
+/data/processed/
+__pycache__/
+.pytest_cache/

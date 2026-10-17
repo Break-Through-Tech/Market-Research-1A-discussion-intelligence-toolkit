@@ -310,7 +310,7 @@ class CgaCmvLoader:
 def load_jsonl_classification(path: str | Path) -> list[ClassificationExample]:
     """Load classification examples from a JSONL file (one JSON object per line)."""
     examples: list[ClassificationExample] = []
-    with open(path) as f:
+    with open(path, encoding="utf-8") as f:
         for line_num, line in enumerate(f, start=1):
             line = line.strip()
             if not line:
@@ -325,7 +325,7 @@ def load_jsonl_classification(path: str | Path) -> list[ClassificationExample]:
 def load_jsonl_regression(path: str | Path) -> list[RegressionExample]:
     """Load regression examples from a JSONL file (one JSON object per line)."""
     examples: list[RegressionExample] = []
-    with open(path) as f:
+    with open(path, encoding="utf-8") as f:
         for line_num, line in enumerate(f, start=1):
             line = line.strip()
             if not line:
