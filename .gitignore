@@ -1,6 +1,10 @@
+
 /.convokit/
 
 # Generated modeling datasets (rebuild with: python -m utils.modeling_data.build)
 /data/processed/
 __pycache__/
 .pytest_cache/
+
+# Generated cleaned dataset from Issue #9
+users/franceli/dataset_finalization/cleaning/cleaned_discourse_dataset.csv
