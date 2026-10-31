@@ -2,7 +2,7 @@
 
 Issue #14 ("6. Prepare modeling datasets and splits"): normalize the labeled corpus to the canonical conversation schema, finalize the label mapping, build train/dev/test splits, check for leakage, and record dataset counts.
 
-**Scope.** This covers the ConvoKit Coarse Discourse corpus, which feeds the discourse classifier (#15) and the baselines (#12, PR #18). CGA-CMV for quality scoring (#16) can reuse the same split and leakage modules; it is not built yet.
+**Scope.** This covers the ConvoKit Coarse Discourse corpus, which feeds the discourse classifier (#15) and the baselines (#12, PR #18). CGA-CMV for quality scoring (#16) is covered in `docs/quality-scoring.md`.
 
 ## Summary
 
@@ -137,4 +137,4 @@ The tests use small synthetic corpora, so no download is needed. They cover the 
 1. **Timestamps (#10, schema).** `created_at` is required, but this corpus has none. The epoch sentinel works, but making `created_at` optional in a schema v1.1 would be more honest. That decision belongs to the schema owner.
 2. **Packaging (#13).** There is no `pyproject.toml` yet, so commands use `uv run --no-project --with ...`. Once the environment setup lands, `pydantic` and `pytest` belong in it.
 3. **Domain subset.** Should the classifier train on all 2,853 subreddits or on a vertical (for example, PC and tech help)? `--subreddits` supports either. The default is all subreddits, which gives the most data.
-4. **CGA-CMV.** Quality scoring (#16) needs its own build. The split and leakage modules are corpus-agnostic, but the reader and normalizer are specific to Coarse Discourse.
+4. **CGA-CMV.** Quality scoring (#16) now has its own loader in `utils/quality/cga_cmv.py`, which reuses the leakage checks here. See `docs/quality-scoring.md`.

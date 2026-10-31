@@ -56,9 +56,9 @@ Training happens once on labeled corpora. Inference should run on new threads wi
 | `Getting-Started-for-Fellows.md` | BTT orientation and initial repo guidance | Challenge Advisor / Fellows |
 | `README.md` | Living project home, progress log, and final portfolio artifact | Fellows |
 | `notebooks/` | EDA, modeling, evaluation, and demo notebooks | Fellows |
-| `utils/` | Helper modules, including `utils/modeling_data/` (modeling datasets and splits) | Fellows |
+| `utils/` | Helper modules, including `utils/modeling_data/` (modeling datasets and splits) and `utils/quality/` (quality scoring and embeddings) | Fellows |
 | `data/` | Small metadata files, data dictionaries, links to external datasets, and tracked split manifests in `data/splits/` | Fellows |
-| `docs/` | Design notes, e.g. `docs/modeling-datasets.md` | Fellows |
+| `docs/` | Design notes, e.g. `docs/modeling-datasets.md` and `docs/quality-scoring.md` | Fellows |
 | `tests/` | Pytest suite (`uv run --no-project --with pydantic --with pytest pytest tests`) | Fellows |
 | `pyproject.toml` / `uv.lock` | Python package metadata, dependency groups, and locked environment once package scaffolding is added | Fellows |
 | `requirements.txt` | Legacy scaffold file from the template; migrate dependencies to `pyproject.toml` and `uv.lock` before adding project packages | Fellows |
@@ -153,7 +153,7 @@ Data exploration should report:
 - language, markdown, and text-cleaning decisions
 - train/dev/test split strategy and leakage controls
 
-The Coarse Discourse modeling splits, label mapping, and leakage checks are documented in `docs/modeling-datasets.md`.
+The Coarse Discourse modeling splits, label mapping, and leakage checks are documented in `docs/modeling-datasets.md`. The CGA-CMV quality target, context rules, and pair-preserving splits are documented in `docs/quality-scoring.md`.
 
 ## Model Development
 
@@ -171,7 +171,10 @@ Document each model experiment:
 
 | Date | Task | Model | Data Split | Metric | Result | Notes |
 |---|---|---|---|---|---:|---|
-| TBD | TBD | TBD | TBD | TBD | TBD | TBD |
+| 2026-10-31 | Quality scoring (CGA-CMV civility) | Length + logistic regression | Official test (1,364 threads) | ROC-AUC | 0.559 | Shape-only baseline; constant scorer is 0.500 |
+| 2026-10-31 | Quality scoring (CGA-CMV civility) | TF-IDF + logistic regression | Official test (1,364 threads) | ROC-AUC | 0.611 | Spearman 0.192, Brier 0.241 |
+| 2026-10-31 | Quality scoring (CGA-CMV civility) | all-MiniLM-L6-v2 embeddings + logistic regression | Official test (1,364 threads) | ROC-AUC | 0.647 | Spearman 0.255, Brier 0.234 |
+| 2026-10-31 | Quality scoring (CGA-CMV civility) | all-mpnet-base-v2 embeddings + logistic regression | Official test (1,364 threads) | ROC-AUC | 0.664 | Spearman 0.283, Brier 0.230; see `docs/quality-scoring.md` |
 
 ## Evaluation Plan
 
