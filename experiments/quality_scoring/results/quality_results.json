@@ -1,0 +1,500 @@
+{
+  "dataset": {
+    "corpus": "conversations-gone-awry-cmv-corpus",
+    "counts": {
+      "train": 4089,
+      "dev": 1367,
+      "test": 1364
+    },
+    "civil_rate": {
+      "train": 0.4979,
+      "dev": 0.4996,
+      "test": 0.4985
+    },
+    "exclusions": {
+      "final_comment_dropped": 6842,
+      "deleted_text": 926,
+      "moderator_notice": 5,
+      "conversation_without_context": 22
+    },
+    "leakage": {
+      "ok": true,
+      "checks": [
+        {
+          "name": "conversation_disjoint",
+          "status": "pass",
+          "detail": "6820 conversations, each in exactly one split",
+          "data": {}
+        },
+        {
+          "name": "pair_disjoint",
+          "status": "pass",
+          "detail": "3421 matched pairs, each in one split",
+          "data": {}
+        },
+        {
+          "name": "example_disjoint",
+          "status": "pass",
+          "detail": "6820 unique example IDs",
+          "data": {}
+        },
+        {
+          "name": "label_coverage",
+          "status": "pass",
+          "detail": "all 2 labels present in every split",
+          "data": {}
+        },
+        {
+          "name": "label_distribution",
+          "status": "pass",
+          "detail": "max label-proportion gap vs train: dev=0.0017, test=0.0006 (warn above 0.02)",
+          "data": {
+            "max_gap": {
+              "dev": 0.0017,
+              "test": 0.0006
+            }
+          }
+        },
+        {
+          "name": "text_overlap",
+          "status": "pass",
+          "detail": "dev: 0 (0.00%) verbatim in train, 0 with >= 8 tokens, test: 0 (0.00%) verbatim in train, 0 with >= 8 tokens",
+          "data": {
+            "dev": {
+              "overlapping_examples": 0,
+              "overlap_rate": 0.0,
+              "long_overlaps": 0,
+              "long_overlap_samples": []
+            },
+            "test": {
+              "overlapping_examples": 0,
+              "overlap_rate": 0.0,
+              "long_overlaps": 0,
+              "long_overlap_samples": []
+            }
+          }
+        }
+      ]
+    }
+  },
+  "models": {
+    "constant": {
+      "C": null,
+      "dev_auc_by_C": null,
+      "dev": {
+        "n_examples": 1367,
+        "roc_auc": 0.5,
+        "spearman_r": 0.0,
+        "mae": 0.4999984793358741,
+        "brier": 0.25000280052854,
+        "accuracy": 0.5003657644476956,
+        "roc_auc_ci95": [
+          0.5,
+          0.5
+        ]
+      },
+      "test": {
+        "n_examples": 1364,
+        "roc_auc": 0.5,
+        "spearman_r": 0.0,
+        "mae": 0.49999390396521964,
+        "brier": 0.24999822515788553,
+        "accuracy": 0.501466275659824,
+        "roc_auc_ci95": [
+          0.5,
+          0.5
+        ]
+      }
+    },
+    "length_lr": {
+      "C": 10.0,
+      "dev_auc_by_C": {
+        "3e-05": 0.5671,
+        "0.0001": 0.5675,
+        "0.0003": 0.5685,
+        "0.001": 0.5703,
+        "0.003": 0.572,
+        "0.01": 0.5732,
+        "0.03": 0.5736,
+        "0.1": 0.5737,
+        "0.3": 0.5738,
+        "1.0": 0.5738,
+        "10.0": 0.5738
+      },
+      "dev": {
+        "n_examples": 1367,
+        "roc_auc": 0.5737854580325876,
+        "spearman_r": 0.12780017132758084,
+        "mae": 0.49240455333138505,
+        "brier": 0.24668003021881946,
+        "accuracy": 0.5574250182882224,
+        "roc_auc_ci95": [
+          0.5549582113225964,
+          0.5944986707974963
+        ]
+      },
+      "test": {
+        "n_examples": 1364,
+        "roc_auc": 0.5588321293429652,
+        "spearman_r": 0.10189983129888108,
+        "mae": 0.4938169220789915,
+        "brier": 0.24824916594936614,
+        "accuracy": 0.5388563049853372,
+        "roc_auc_ci95": [
+          0.5375912171548781,
+          0.5786658644972204
+        ]
+      }
+    },
+    "tfidf_lr": {
+      "C": 1.0,
+      "dev_auc_by_C": {
+        "3e-05": 0.6025,
+        "0.0001": 0.6025,
+        "0.0003": 0.6002,
+        "0.001": 0.6034,
+        "0.003": 0.6032,
+        "0.01": 0.6035,
+        "0.03": 0.6038,
+        "0.1": 0.6111,
+        "0.3": 0.6197,
+        "1.0": 0.6262,
+        "10.0": 0.6172
+      },
+      "dev": {
+        "n_examples": 1367,
+        "roc_auc": 0.6262083344036029,
+        "spearman_r": 0.21859924752568347,
+        "mae": 0.48042038486584315,
+        "brier": 0.23863984306783187,
+        "accuracy": 0.5925384052670081,
+        "roc_auc_ci95": [
+          0.600849774042037,
+          0.6505252150234261
+        ]
+      },
+      "test": {
+        "n_examples": 1364,
+        "roc_auc": 0.6108380632954936,
+        "spearman_r": 0.1919763831432866,
+        "mae": 0.48298977728775827,
+        "brier": 0.2406049784647523,
+        "accuracy": 0.5791788856304986,
+        "roc_auc_ci95": [
+          0.5837697638194959,
+          0.6381093058088337
+        ]
+      }
+    },
+    "emb_all-MiniLM-L6-v2_lr": {
+      "C": 0.0003,
+      "dev_auc_by_C": {
+        "3e-05": 0.6362,
+        "0.0001": 0.6455,
+        "0.0003": 0.652,
+        "0.001": 0.6515,
+        "0.003": 0.6441,
+        "0.01": 0.6324,
+        "0.03": 0.6222,
+        "0.1": 0.6139,
+        "0.3": 0.6084,
+        "1.0": 0.605,
+        "10.0": 0.6032
+      },
+      "dev": {
+        "n_examples": 1367,
+        "roc_auc": 0.6519954106838595,
+        "spearman_r": 0.263263773821742,
+        "mae": 0.4708899499490127,
+        "brier": 0.23256109563761507,
+        "accuracy": 0.5969275786393563,
+        "roc_auc_ci95": [
+          0.6260538752730507,
+          0.6786807218403886
+        ]
+      },
+      "test": {
+        "n_examples": 1364,
+        "roc_auc": 0.6472544719642243,
+        "spearman_r": 0.2550511989189153,
+        "mae": 0.4736559953201901,
+        "brier": 0.234458640506687,
+        "accuracy": 0.6217008797653959,
+        "roc_auc_ci95": [
+          0.6214520265318676,
+          0.6729841797745127
+        ]
+      }
+    },
+    "emb_all-mpnet-base-v2_lr": {
+      "C": 0.0003,
+      "dev_auc_by_C": {
+        "3e-05": 0.6662,
+        "0.0001": 0.6756,
+        "0.0003": 0.6784,
+        "0.001": 0.6722,
+        "0.003": 0.6588,
+        "0.01": 0.6426,
+        "0.03": 0.6295,
+        "0.1": 0.6182,
+        "0.3": 0.6102,
+        "1.0": 0.6032,
+        "10.0": 0.597
+      },
+      "dev": {
+        "n_examples": 1367,
+        "roc_auc": 0.6784353514337331,
+        "spearman_r": 0.30905909454963404,
+        "mae": 0.4572732829554899,
+        "brier": 0.2256014293889323,
+        "accuracy": 0.6283833211411851,
+        "roc_auc_ci95": [
+          0.6528051011040527,
+          0.7065164140285891
+        ]
+      },
+      "test": {
+        "n_examples": 1364,
+        "roc_auc": 0.6635868163054696,
+        "spearman_r": 0.2833395357583577,
+        "mae": 0.4625955909774625,
+        "brier": 0.22955367728808176,
+        "accuracy": 0.6195014662756598,
+        "roc_auc_ci95": [
+          0.6369700024044448,
+          0.6890871772184133
+        ]
+      }
+    }
+  },
+  "ablation": {
+    "tfidf_lr": {
+      "1": 0.5282,
+      "2": 0.5453,
+      "3": 0.5629
+    },
+    "emb_all-MiniLM-L6-v2_lr": {
+      "1": 0.5163,
+      "2": 0.5337,
+      "3": 0.5643
+    },
+    "emb_all-mpnet-base-v2_lr": {
+      "1": 0.5274,
+      "2": 0.5345,
+      "3": 0.5772
+    }
+  },
+  "leaky_with_final_comment": {
+    "C": 1.0,
+    "dev_auc_by_C": null,
+    "dev": {
+      "n_examples": 1368,
+      "roc_auc": 0.6530492288225437,
+      "spearman_r": 0.26508911120539824,
+      "mae": 0.4738092578924228,
+      "brier": 0.23323402845787244,
+      "accuracy": 0.6052631578947368,
+      "roc_auc_ci95": [
+        0.6286311386409494,
+        0.6771246922129885
+      ]
+    },
+    "test": {
+      "n_examples": 1368,
+      "roc_auc": 0.6479429568072228,
+      "spearman_r": 0.2562447862746015,
+      "mae": 0.4754778750493805,
+      "brier": 0.23454720864383555,
+      "accuracy": 0.6074561403508771,
+      "roc_auc_ci95": [
+        0.6200639726753531,
+        0.6736620883348722
+      ]
+    }
+  },
+  "pair_retrieval": {
+    "all-MiniLM-L6-v2": {
+      "queries": 1360,
+      "candidates": 1363,
+      "recall@1": 0.2647,
+      "recall@5": 0.4625,
+      "recall@10": 0.5588
+    },
+    "all-mpnet-base-v2": {
+      "queries": 1360,
+      "candidates": 1363,
+      "recall@1": 0.3037,
+      "recall@5": 0.511,
+      "recall@10": 0.6051
+    }
+  },
+  "best_model": "emb_all-mpnet-base-v2_lr",
+  "calibration": [
+    {
+      "bin": "0.0-0.2",
+      "n": 14,
+      "mean_score": 0.172,
+      "civil_rate": 0.214
+    },
+    {
+      "bin": "0.2-0.4",
+      "n": 298,
+      "mean_score": 0.327,
+      "civil_rate": 0.302
+    },
+    {
+      "bin": "0.4-0.6",
+      "n": 749,
+      "mean_score": 0.504,
+      "civil_rate": 0.51
+    },
+    {
+      "bin": "0.6-0.8",
+      "n": 296,
+      "mean_score": 0.665,
+      "civil_rate": 0.679
+    },
+    {
+      "bin": "0.8-1.0",
+      "n": 7,
+      "mean_score": 0.82,
+      "civil_rate": 0.571
+    }
+  ],
+  "tfidf_top_terms": {
+    "civil": [
+      [
+        "that the",
+        0.909
+      ],
+      [
+        "don think",
+        0.811
+      ],
+      [
+        "risk",
+        0.781
+      ],
+      [
+        "in",
+        0.747
+      ],
+      [
+        "could",
+        0.709
+      ],
+      [
+        "vote",
+        0.703
+      ],
+      [
+        "issue",
+        0.681
+      ],
+      [
+        "could you",
+        0.674
+      ],
+      [
+        "the",
+        0.668
+      ],
+      [
+        "that",
+        0.642
+      ],
+      [
+        "they re",
+        0.639
+      ],
+      [
+        "personally",
+        0.626
+      ],
+      [
+        "would you",
+        0.624
+      ],
+      [
+        "seems",
+        0.62
+      ],
+      [
+        "their",
+        0.616
+      ]
+    ],
+    "derailed": [
+      [
+        "you re",
+        -1.491
+      ],
+      [
+        "fucking",
+        -1.394
+      ],
+      [
+        "you",
+        -1.349
+      ],
+      [
+        "shit",
+        -1.169
+      ],
+      [
+        "literally",
+        -1.033
+      ],
+      [
+        "nothing",
+        -1.024
+      ],
+      [
+        "right",
+        -1.002
+      ],
+      [
+        "white",
+        -0.989
+      ],
+      [
+        "no",
+        -0.96
+      ],
+      [
+        "yourself",
+        -0.947
+      ],
+      [
+        "your",
+        -0.929
+      ],
+      [
+        "fuck",
+        -0.918
+      ],
+      [
+        "because",
+        -0.908
+      ],
+      [
+        "you don",
+        -0.897
+      ],
+      [
+        "here",
+        -0.875
+      ]
+    ]
+  },
+  "environment": {
+    "python": "3.13.5",
+    "platform": "macOS-27.2-arm64-arm-64bit-Mach-O",
+    "runtime_seconds": 56.4,
+    "numpy": "2.5.4",
+    "scikit-learn": "1.9.1",
+    "scipy": "1.18.1",
+    "sentence-transformers": "6.2.0",
+    "torch": "2.15.0"
+  }
+}
