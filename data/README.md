@@ -47,7 +47,7 @@ Source and documentation: <https://convokit.cornell.edu/documentation/coarseDisc
 
 ### Conversations Gone Awry — ChangeMyView
 
-Use this corpus for conversation-quality and derailment modeling. The prepared loader names it `conversations-gone-awry-cmv-corpus`.
+Use this corpus for conversation-quality and derailment modeling. The prepared loader names it `conversations-gone-awry-cmv-corpus`. For quality scoring, load it with `utils.quality.cga_cmv.load_quality_dataset`, which holds out the removed comment; see [`docs/quality-scoring.md`](../docs/quality-scoring.md).
 
 ```text
 uv run --with convokit python -c "from convokit import download; print(download('conversations-gone-awry-cmv-corpus'))"
