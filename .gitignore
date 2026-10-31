@@ -8,3 +8,4 @@ __pycache__/
 
 # Generated cleaned dataset from Issue #9
 users/franceli/dataset_finalization/cleaning/cleaned_discourse_dataset.csv
+/artifacts/topic_clustering/
