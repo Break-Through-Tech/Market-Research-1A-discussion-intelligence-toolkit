@@ -32,13 +32,22 @@ from typing import Any, Iterator
 import pandas as pd
 from pydantic import Field
 
-from connector import (
-    Connector,
-    ConnectorConfig,
-    ConversationNotFoundError,
-    MalformedConversationError,
-)
-from schema import Conversation, Speaker, Utterance
+if __package__:
+    from .connector import (
+        Connector,
+        ConnectorConfig,
+        ConversationNotFoundError,
+        MalformedConversationError,
+    )
+    from .schema import Conversation, Speaker, Utterance
+else:  # Preserve the original starter-notebook import path.
+    from connector import (
+        Connector,
+        ConnectorConfig,
+        ConversationNotFoundError,
+        MalformedConversationError,
+    )
+    from schema import Conversation, Speaker, Utterance
 
 log = logging.getLogger(__name__)
 

@@ -1,0 +1,14 @@
+include README.md pyproject.toml uv.lock
+recursive-include src/discussion_intelligence *.py
+recursive-include artifacts *.py
+recursive-include utils *.py
+prune data
+prune users
+prune notebooks
+prune experiments
+recursive-include tests *.py
+recursive-include docs *.md
+recursive-include examples *.py *.md *.json
+include data/coarse-discourse-reference-sample.jsonl
+global-exclude .DS_Store *.pyc
+exclude leagueoflegends_data.csv subreddit_conversation_counts.txt subreddits_small_sample.txt

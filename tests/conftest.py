@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import sys
+from datetime import datetime, timezone
 from pathlib import Path
 
 import pytest
@@ -70,3 +71,29 @@ def tiny_corpus(tmp_path: Path) -> Path:
     ]
     convs[edge] = {"subreddit": "buildapc", "url": "https://reddit.com/x", "title": "Edge"}
     return write_corpus(tmp_path / "corpus", utts, convs)
+
+
+@pytest.fixture
+def conversation():
+    from artifacts.schema import Conversation, Speaker, Utterance
+
+    now = datetime(2026, 1, 1, tzinfo=timezone.utc)
+    cid = "reddit:t3_test"
+    speaker = Speaker(id="reddit:u/test", handle="test", source="reddit")
+    texts = {
+        "reddit:t3_test": "How can we protect data drives?",
+        "reddit:t1_storage": "RAID storage protects data drives from disk failure.",
+        "reddit:t1_gpu": "A blue graphics card offers faster gaming.",
+    }
+    return Conversation(
+        id=cid, source_id="t3_test", source="reddit", title="Storage and graphics",
+        url="https://www.reddit.com/comments/test/", created_at=now,
+        speakers={speaker.id: speaker},
+        utterances=[Utterance(
+            id=uid, source_id=uid.removeprefix("reddit:"), conversation_id=cid,
+            parent_id=None if uid == cid else cid, speaker_id=speaker.id,
+            text=text, created_at=now, depth=0 if uid == cid else 1,
+            metadata={"source_url": f"https://www.reddit.com/comments/test/{uid.split(':')[1]}/",
+                      "discourse_act_gold": "question"},
+        ) for uid, text in texts.items()],
+    )
