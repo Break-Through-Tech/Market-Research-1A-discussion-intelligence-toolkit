@@ -37,7 +37,10 @@ from typing import Iterator
 
 from pydantic import BaseModel, ConfigDict
 
-from schema import Conversation
+if __package__:
+    from .schema import Conversation
+else:  # Preserve the original starter-notebook import path.
+    from schema import Conversation
 
 
 # ---------------------------------------------------------------------------

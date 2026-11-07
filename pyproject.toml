@@ -1,0 +1,48 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "discussion-intelligence-toolkit"
+version = "0.1.0"
+description = "Evidence-linked reports from canonical threaded conversations"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "pydantic>=2.10,<3",
+    "numpy>=1.26,<3",
+    "scipy>=1.12,<2",
+    "scikit-learn>=1.5,<2",
+]
+
+[project.optional-dependencies]
+embeddings = ["sentence-transformers>=3,<6"]
+reddit = ["pandas>=2.2,<4", "pyarrow>=17", "requests>=2.32"]
+corpora = ["convokit>=3,<5"]
+
+[project.scripts]
+discussion-intelligence = "discussion_intelligence.cli:main"
+
+[dependency-groups]
+dev = ["pytest>=8,<10", "ruff>=0.11,<1"]
+
+[tool.setuptools]
+packages = ["discussion_intelligence", "artifacts", "utils", "utils.modeling_data"]
+include-package-data = false
+
+[tool.setuptools.package-dir]
+discussion_intelligence = "src/discussion_intelligence"
+artifacts = "artifacts"
+utils = "utils"
+"utils.modeling_data" = "utils/modeling_data"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src", "."]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I"]

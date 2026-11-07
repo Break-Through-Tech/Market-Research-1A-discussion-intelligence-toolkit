@@ -1,0 +1,30 @@
+name: Offline unit tests
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.11", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          python-version: ${{ matrix.python-version }}
+          enable-cache: true
+      - run: uv sync --locked
+      - run: uv run --offline ruff check src/discussion_intelligence tests/integration
+      - run: uv run --offline ruff format --check src/discussion_intelligence tests/integration
+      - run: uv run --offline pytest -q
+        env:
+          HF_HUB_OFFLINE: "1"
+          TRANSFORMERS_OFFLINE: "1"
+      - run: uv run --offline discussion-intelligence --input data/coarse-discourse-reference-sample.jsonl --query "RAID data drives" --format json --output /tmp/report.json
+      - run: uv build
