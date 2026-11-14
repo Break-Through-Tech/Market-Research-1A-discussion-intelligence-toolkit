@@ -1,3 +1,5 @@
+> Historical November 7 draft. Do not republish this older body over the current GitHub PR description. See `INTEGRATION_READINESS.md` for the latest validation and owner handoffs.
+
 ## November integration milestone: runnable evidence-linked analysis
 
 The repository had schema/data/model experiments but no installable inference pipeline, evidence retrieval, or report generation. This change adds `analyze(Conversation)` and an offline CLI that turn the tracked sample threads into JSON/Markdown reports with source-linked quotations, without training a model or requiring an API key.

@@ -37,6 +37,14 @@ The input is two small source-derived Reddit conversations. Its labels are refer
 
 See the committed [Markdown example](examples/buildapc-report.md), [JSON example](examples/buildapc-report.json), and [integration handoff](docs/ROHAN_INTEGRATION_HANDOFF.md).
 
+Run both real reference threads through validation, retrieval and grounded JSON/Markdown reporting:
+
+```bash
+uv run --offline python examples/end_to_end_demo.py
+```
+
+This creates a fresh temporary directory, prints its location and each component's actual status, and preserves source IDs and citations. The demo uses the documented RAID and karma questions; it is not a generalization benchmark. `--output-dir PATH` requires a new directory and never overwrites existing output. An explicit `--trusted-bundle PATH` reuses the CLI's fitted-owner-model loader; missing models remain unavailable. No API key, training, model download or paid service is needed for the default demo.
+
 ## Python API
 
 ```python
@@ -85,7 +93,7 @@ flowchart TD
 | Retrieval | Working deterministic TF-IDF/cosine; optional `embed(texts)` backend compatible with `TextEmbedder` |
 | Report generation | Working extractive fallback, strict citation validation, JSON and Markdown |
 | Injected synthesis | Quotation selection only; unknown citations, unretrieved evidence, and non-extractive claims trigger fallback |
-| Free-form LLM synthesis | Not implemented; an API key is never required |
+| LLM synthesis | Aisha's exact-quotation provider is in separate [PR #29](https://github.com/Break-Through-Tech/Market-Research-1A-discussion-intelligence-toolkit/pull/29); the default extractive path requires no API key. Free-form abstraction remains unsupported. |
 
 Component statuses distinguish unavailable models from failed models. The pipeline never creates default labels, quality scores, or embeddings. A conversation civility estimate is stored separately from the canonical per-utterance argument-quality slot. Agreement/disagreement/question excerpts require supplied or predicted discourse labels; these do not establish consensus, targets of disagreement, or unanswered questions. `open_questions` remains empty.
 
@@ -149,13 +157,15 @@ For Gia's #26 review, see the [proposed report contract](docs/report-contract-pr
 | `docs/` | Dataset documentation, adapter contracts, handoff, validation record, draft PR text |
 | `pyproject.toml`, `uv.lock` | Package metadata, dependency extras, locked environment |
 
-The wheel explicitly includes the toolkit, `artifacts`, `utils`, and `utils.modeling_data` Python modules. Raw corpora, checkpoints, exploration files, and caches are excluded. The CLI accepts an explicit input path; reference data is available in the repository/source distribution, not embedded in the wheel.
+The wheel discovers regular packages only under the toolkit, `artifacts`, and `utils` namespaces. This includes future owner subpackages such as `utils.quality` when their reviewed code lands, without importing or copying that code into this branch. Raw corpora, checkpoints, exploration files, and caches are excluded. The CLI accepts an explicit input path; reference data is available in the repository/source distribution, not embedded in the wheel.
+
+See [current integration readiness and owner handoffs](docs/INTEGRATION_READINESS.md). Compatibility tests for PR #22/#29 are explicit skips when the owner's modules are absent; they execute against those actual modules when present. Aisha's mocked client validates integration without a live API call. Successful synthetic/interface tests do not mean production models or a live LLM were evaluated.
 
 ## Team and attribution
 
 | Contributor | Verifiable repository contribution |
 |---|---|
-| Aisha Mouss | Majority-class and TF-IDF + Logistic Regression baselines (`b2624bf`) |
+| Aisha Mouss | Majority-class and TF-IDF + Logistic Regression baselines (`b2624bf`); exact-quotation LLM provider in PR #29 |
 | Franceli Gonzalez | Baseline integration, context-aware discourse classifier and evaluation, dataset cleaning/EDA; clustering issue #17 |
 | Gia Khanh (Gin-CS) | Modeling-data preparation, deterministic splits/leakage checks; quality and embedding work in unmerged PR #22 |
 | Sonia Tyburczy | Arctic Shift Reddit scraper (`02531f1`) |

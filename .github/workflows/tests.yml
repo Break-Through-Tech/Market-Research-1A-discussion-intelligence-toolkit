@@ -27,4 +27,5 @@ jobs:
           HF_HUB_OFFLINE: "1"
           TRANSFORMERS_OFFLINE: "1"
       - run: uv run --offline discussion-intelligence --input data/coarse-discourse-reference-sample.jsonl --query "RAID data drives" --format json --output /tmp/report.json
+      - run: uv run --offline python examples/end_to_end_demo.py
       - run: uv build

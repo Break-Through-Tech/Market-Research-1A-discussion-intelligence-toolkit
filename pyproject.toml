@@ -28,8 +28,12 @@ discussion-intelligence = "discussion_intelligence.cli:main"
 dev = ["pytest>=8,<10", "ruff>=0.11,<1"]
 
 [tool.setuptools]
-packages = ["discussion_intelligence", "artifacts", "utils", "utils.modeling_data"]
 include-package-data = false
+
+[tool.setuptools.packages.find]
+where = ["src", "."]
+include = ["discussion_intelligence", "discussion_intelligence.*", "artifacts", "artifacts.*", "utils", "utils.*"]
+namespaces = false
 
 [tool.setuptools.package-dir]
 discussion_intelligence = "src/discussion_intelligence"
