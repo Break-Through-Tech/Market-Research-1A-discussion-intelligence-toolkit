@@ -1,4 +1,3 @@
-
 """Evidence-grounded LLM synthesis for Reddit discussions."""
 
 from collections.abc import Callable, Sequence
@@ -45,10 +44,7 @@ class LLMSynthesisProvider:
         evidence: Sequence[Evidence],
         query: str | None,
     ) -> str:
-        comments = "\n\n".join(
-            f"ID: {item.id}\nText: {item.text_clean}"
-            for item in evidence
-        )
+        comments = "\n\n".join(f"ID: {item.id}\nText: {item.text_clean}" for item in evidence)
 
         return f"""
 You analyze Reddit discussions.
@@ -82,7 +78,8 @@ Reddit comments:
 """
 
 
-###### added this 
+###### added this
+
 
 def create_openai_provider(
     model: str = "gpt-4.1-mini",
