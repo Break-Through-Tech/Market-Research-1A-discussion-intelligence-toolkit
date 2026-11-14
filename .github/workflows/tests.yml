@@ -20,8 +20,8 @@ jobs:
           python-version: ${{ matrix.python-version }}
           enable-cache: true
       - run: uv sync --locked
-      - run: uv run --offline ruff check src/discussion_intelligence tests/integration
-      - run: uv run --offline ruff format --check src/discussion_intelligence tests/integration
+      - run: uv run --offline ruff check src/discussion_intelligence tests/integration examples
+      - run: uv run --offline ruff format --check src/discussion_intelligence tests/integration examples
       - run: uv run --offline pytest -q
         env:
           HF_HUB_OFFLINE: "1"

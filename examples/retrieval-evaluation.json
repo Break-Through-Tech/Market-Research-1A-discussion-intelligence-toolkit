@@ -1,0 +1,334 @@
+{
+  "evaluation": "November reference retrieval review v1",
+  "scope": "Curated evaluation on two already inspected reference threads; NOT a held-out or representative benchmark.",
+  "curation_note": "Agent-authored judgments from direct source inspection on 2026-11-14, pending Franceli/team review. Relevant replies supply the requested explanation or recommendation; the root merely asking the question is excluded. Quotes justify each proposed label, not the objective truth of source claims. No discourse gold labels or model predictions were used. Queries and labels were written before measuring this set.",
+  "judgments_source_sha256": "53be6730d7043963bb78647c69a84d377f371081a0e0b82df9e188f57fc943a0",
+  "retriever": "EvidenceIndex/tfidf",
+  "positive_queries": 8,
+  "no_answer_queries": 2,
+  "metrics": {
+    "1": {
+      "macro_recall": 0.7291666666666666,
+      "no_answer_abstention_rate": 0.5
+    },
+    "2": {
+      "macro_recall": 0.8333333333333334,
+      "no_answer_abstention_rate": 0.5
+    },
+    "3": {
+      "macro_recall": 0.875,
+      "no_answer_abstention_rate": 0.5
+    }
+  },
+  "cases": [
+    {
+      "id": "build-raid",
+      "conversation_id": "reddit:t3_10r2f8",
+      "query": "RAID data drives",
+      "relevant_ids": [
+        "reddit:t1_c6fwalq"
+      ],
+      "returned": [
+        {
+          "id": "reddit:t1_c6fwalq",
+          "source_id": "t1_c6fwalq",
+          "source_url": null,
+          "conversation_url": "https://www.reddit.com/r/buildapc/comments/10r2f8/build_help_first_time_building_1500_build/",
+          "score": 0.37303192022253884
+        },
+        {
+          "id": "reddit:t3_10r2f8",
+          "source_id": "t3_10r2f8",
+          "source_url": null,
+          "conversation_url": "https://www.reddit.com/r/buildapc/comments/10r2f8/build_help_first_time_building_1500_build/",
+          "score": 0.021974438929692017
+        }
+      ],
+      "recall_at_k": {
+        "1": 1.0,
+        "2": 1.0,
+        "3": 1.0
+      },
+      "abstained_at_k": {
+        "1": false,
+        "2": false,
+        "3": false
+      }
+    },
+    {
+      "id": "build-memory-multiple",
+      "conversation_id": "reddit:t3_10r2f8",
+      "query": "8GB RAM 16GB",
+      "relevant_ids": [
+        "reddit:t1_c6fwamd",
+        "reddit:t1_c6fwdkh"
+      ],
+      "returned": [
+        {
+          "id": "reddit:t1_c6fwdkh",
+          "source_id": "t1_c6fwdkh",
+          "source_url": null,
+          "conversation_url": "https://www.reddit.com/r/buildapc/comments/10r2f8/build_help_first_time_building_1500_build/",
+          "score": 0.3166738098984138
+        },
+        {
+          "id": "reddit:t1_c6fwamd",
+          "source_id": "t1_c6fwamd",
+          "source_url": null,
+          "conversation_url": "https://www.reddit.com/r/buildapc/comments/10r2f8/build_help_first_time_building_1500_build/",
+          "score": 0.22009574849381688
+        },
+        {
+          "id": "reddit:t3_10r2f8",
+          "source_id": "t3_10r2f8",
+          "source_url": null,
+          "conversation_url": "https://www.reddit.com/r/buildapc/comments/10r2f8/build_help_first_time_building_1500_build/",
+          "score": 0.02336699871206516
+        }
+      ],
+      "recall_at_k": {
+        "1": 0.5,
+        "2": 1.0,
+        "3": 1.0
+      },
+      "abstained_at_k": {
+        "1": false,
+        "2": false,
+        "3": false
+      }
+    },
+    {
+      "id": "build-clock",
+      "conversation_id": "reddit:t3_10r2f8",
+      "query": "higher base clock Sapphire",
+      "relevant_ids": [
+        "reddit:t1_c6fwmq5"
+      ],
+      "returned": [
+        {
+          "id": "reddit:t1_c6fwmq5",
+          "source_id": "t1_c6fwmq5",
+          "source_url": null,
+          "conversation_url": "https://www.reddit.com/r/buildapc/comments/10r2f8/build_help_first_time_building_1500_build/",
+          "score": 0.34005174465003957
+        },
+        {
+          "id": "reddit:t3_10r2f8",
+          "source_id": "t3_10r2f8",
+          "source_url": null,
+          "conversation_url": "https://www.reddit.com/r/buildapc/comments/10r2f8/build_help_first_time_building_1500_build/",
+          "score": 0.031765413434894245
+        }
+      ],
+      "recall_at_k": {
+        "1": 1.0,
+        "2": 1.0,
+        "3": 1.0
+      },
+      "abstained_at_k": {
+        "1": false,
+        "2": false,
+        "3": false
+      }
+    },
+    {
+      "id": "build-semantic-paraphrase",
+      "conversation_id": "reddit:t3_10r2f8",
+      "query": "graphics upgrade worth extra cost",
+      "relevant_ids": [
+        "reddit:t1_c6fwmq5"
+      ],
+      "returned": [],
+      "recall_at_k": {
+        "1": 0.0,
+        "2": 0.0,
+        "3": 0.0
+      },
+      "abstained_at_k": {
+        "1": true,
+        "2": true,
+        "3": true
+      }
+    },
+    {
+      "id": "karma-effort",
+      "conversation_id": "reddit:t3_169c79",
+      "query": "external website earned",
+      "relevant_ids": [
+        "reddit:t1_c7twpl2"
+      ],
+      "returned": [
+        {
+          "id": "reddit:t1_c7twpl2",
+          "source_id": "t1_c7twpl2",
+          "source_url": null,
+          "conversation_url": "https://www.reddit.com/r/explainlikeimfive/comments/169c79/eli5_why_comment_karma_is_considered_inferior_to/",
+          "score": 0.38578754308505575
+        }
+      ],
+      "recall_at_k": {
+        "1": 1.0,
+        "2": 1.0,
+        "3": 1.0
+      },
+      "abstained_at_k": {
+        "1": false,
+        "2": false,
+        "3": false
+      }
+    },
+    {
+      "id": "karma-links",
+      "conversation_id": "reddit:t3_169c79",
+      "query": "sharing links discussion forum",
+      "relevant_ids": [
+        "reddit:t1_c7twpcx"
+      ],
+      "returned": [
+        {
+          "id": "reddit:t1_c7twpcx",
+          "source_id": "t1_c7twpcx",
+          "source_url": null,
+          "conversation_url": "https://www.reddit.com/r/explainlikeimfive/comments/169c79/eli5_why_comment_karma_is_considered_inferior_to/",
+          "score": 0.5493360422212307
+        }
+      ],
+      "recall_at_k": {
+        "1": 1.0,
+        "2": 1.0,
+        "3": 1.0
+      },
+      "abstained_at_k": {
+        "1": false,
+        "2": false,
+        "3": false
+      }
+    },
+    {
+      "id": "karma-abundance",
+      "conversation_id": "reddit:t3_169c79",
+      "query": "comment karma easier",
+      "relevant_ids": [
+        "reddit:t1_c7twyqu"
+      ],
+      "returned": [
+        {
+          "id": "reddit:t1_c7twyqu",
+          "source_id": "t1_c7twyqu",
+          "source_url": null,
+          "conversation_url": "https://www.reddit.com/r/explainlikeimfive/comments/169c79/eli5_why_comment_karma_is_considered_inferior_to/",
+          "score": 0.25842047364886284
+        },
+        {
+          "id": "reddit:t1_c7twpl2",
+          "source_id": "t1_c7twpl2",
+          "source_url": null,
+          "conversation_url": "https://www.reddit.com/r/explainlikeimfive/comments/169c79/eli5_why_comment_karma_is_considered_inferior_to/",
+          "score": 0.24895506559280944
+        }
+      ],
+      "recall_at_k": {
+        "1": 1.0,
+        "2": 1.0,
+        "3": 1.0
+      },
+      "abstained_at_k": {
+        "1": false,
+        "2": false,
+        "3": false
+      }
+    },
+    {
+      "id": "karma-explanations-multiple",
+      "conversation_id": "reddit:t3_169c79",
+      "query": "Why is comment karma considered inferior to link karma?",
+      "relevant_ids": [
+        "reddit:t1_c7twpcx",
+        "reddit:t1_c7twpl2",
+        "reddit:t1_c7twyqu"
+      ],
+      "returned": [
+        {
+          "id": "reddit:t1_c7twpl2",
+          "source_id": "t1_c7twpl2",
+          "source_url": null,
+          "conversation_url": "https://www.reddit.com/r/explainlikeimfive/comments/169c79/eli5_why_comment_karma_is_considered_inferior_to/",
+          "score": 0.4125311071153013
+        },
+        {
+          "id": "reddit:t1_c7twyqu",
+          "source_id": "t1_c7twyqu",
+          "source_url": null,
+          "conversation_url": "https://www.reddit.com/r/explainlikeimfive/comments/169c79/eli5_why_comment_karma_is_considered_inferior_to/",
+          "score": 0.3779040415084579
+        },
+        {
+          "id": "reddit:t1_c7twpcx",
+          "source_id": "t1_c7twpcx",
+          "source_url": null,
+          "conversation_url": "https://www.reddit.com/r/explainlikeimfive/comments/169c79/eli5_why_comment_karma_is_considered_inferior_to/",
+          "score": 0.02874356874860719
+        }
+      ],
+      "recall_at_k": {
+        "1": 0.3333333333333333,
+        "2": 0.6666666666666666,
+        "3": 1.0
+      },
+      "abstained_at_k": {
+        "1": false,
+        "2": false,
+        "3": false
+      }
+    },
+    {
+      "id": "build-no-answer",
+      "conversation_id": "reddit:t3_10r2f8",
+      "query": "quantum entanglement",
+      "relevant_ids": [],
+      "returned": [],
+      "recall_at_k": {
+        "1": null,
+        "2": null,
+        "3": null
+      },
+      "abstained_at_k": {
+        "1": true,
+        "2": true,
+        "3": true
+      }
+    },
+    {
+      "id": "karma-no-answer-overlap",
+      "conversation_id": "reddit:t3_169c79",
+      "query": "karma password reset",
+      "relevant_ids": [],
+      "returned": [
+        {
+          "id": "reddit:t1_c7twpl2",
+          "source_id": "t1_c7twpl2",
+          "source_url": null,
+          "conversation_url": "https://www.reddit.com/r/explainlikeimfive/comments/169c79/eli5_why_comment_karma_is_considered_inferior_to/",
+          "score": 0.29732760151847015
+        },
+        {
+          "id": "reddit:t1_c7twyqu",
+          "source_id": "t1_c7twyqu",
+          "source_url": null,
+          "conversation_url": "https://www.reddit.com/r/explainlikeimfive/comments/169c79/eli5_why_comment_karma_is_considered_inferior_to/",
+          "score": 0.19321425428019418
+        }
+      ],
+      "recall_at_k": {
+        "1": null,
+        "2": null,
+        "3": null
+      },
+      "abstained_at_k": {
+        "1": false,
+        "2": false,
+        "3": false
+      }
+    }
+  ]
+}

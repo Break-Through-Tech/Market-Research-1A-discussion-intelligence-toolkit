@@ -120,6 +120,19 @@ uv sync --locked --extra corpora     # ConvoKit corpus download/loading
 
 Installing an extra does not select or download a model. Supply an already loaded embedder to `EvidenceIndex` or `analyze`. When PR #22 is approved and merged, its `SentenceTransformerEmbedder.embed(texts)` can be injected directly. This branch includes no code copied from that PR.
 
+## Evaluation and review demos
+
+The [curated retrieval evaluation](docs/retrieval-evaluation.md) measures the existing retriever on 10 source-inspected queries from the two reference threads. Its judgments are agent-drafted proposals for Franceli to review, **not an independently annotated held-out benchmark**. The committed [results](examples/retrieval-evaluation.json) retain both successful retrieval and known failures.
+
+```bash
+uv run --offline python examples/evaluate_retrieval.py
+uv run --offline python examples/synthesis_provider_demo.py --mode fabricated
+```
+
+The second command demonstrates rejection of an unsupported claim and safe extractive fallback using a deterministic mock; **no LLM executes**. `--mode quote` demonstrates an accepted quotation, and `--mode error` demonstrates a provider exception.
+
+For Gia's #26 review, see the [proposed report contract](docs/report-contract-proposal.md), [JSON Schema snapshot](examples/insight-report.schema.json), and [actual karma sample report](examples/karma-report.md). Report v1 fields, presentation and exact-quotation policy remain unchanged. The [November team audit](docs/november-team-audit.md) separates implemented code from pending artifacts and owner decisions.
+
 ## Repository map
 
 | Path | Purpose |

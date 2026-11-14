@@ -1,0 +1,381 @@
+{
+  "$defs": {
+    "Claim": {
+      "additionalProperties": false,
+      "description": "An extractive discussion point, not an assertion of objective truth.",
+      "properties": {
+        "text": {
+          "minLength": 1,
+          "title": "Text",
+          "type": "string"
+        },
+        "evidence_ids": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Evidence Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "text",
+        "evidence_ids"
+      ],
+      "title": "Claim",
+      "type": "object"
+    },
+    "ComponentStatus": {
+      "additionalProperties": false,
+      "properties": {
+        "state": {
+          "enum": [
+            "available",
+            "unavailable",
+            "failed"
+          ],
+          "title": "State",
+          "type": "string"
+        },
+        "detail": {
+          "title": "Detail",
+          "type": "string"
+        }
+      },
+      "required": [
+        "state",
+        "detail"
+      ],
+      "title": "ComponentStatus",
+      "type": "object"
+    },
+    "ConversationQuality": {
+      "additionalProperties": false,
+      "properties": {
+        "scope": {
+          "const": "conversation",
+          "default": "conversation",
+          "title": "Scope",
+          "type": "string"
+        },
+        "target": {
+          "const": "civility_probability",
+          "default": "civility_probability",
+          "title": "Target",
+          "type": "string"
+        },
+        "value": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Value",
+          "type": "number"
+        },
+        "evidence_ids": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Evidence Ids",
+          "type": "array"
+        },
+        "model_name": {
+          "title": "Model Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "value",
+        "evidence_ids",
+        "model_name"
+      ],
+      "title": "ConversationQuality",
+      "type": "object"
+    },
+    "Evidence": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "conversation_id": {
+          "title": "Conversation Id",
+          "type": "string"
+        },
+        "source_id": {
+          "title": "Source Id",
+          "type": "string"
+        },
+        "parent_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Parent Id"
+        },
+        "speaker_id": {
+          "title": "Speaker Id",
+          "type": "string"
+        },
+        "text": {
+          "title": "Text",
+          "type": "string"
+        },
+        "text_clean": {
+          "title": "Text Clean",
+          "type": "string"
+        },
+        "source_url": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Url"
+        },
+        "conversation_url": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Conversation Url"
+        },
+        "created_at": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Created At"
+        },
+        "metadata": {
+          "additionalProperties": true,
+          "title": "Metadata",
+          "type": "object"
+        },
+        "discourse_act": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Discourse Act"
+        },
+        "argument_quality_score": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Argument Quality Score"
+        }
+      },
+      "required": [
+        "id",
+        "conversation_id",
+        "source_id",
+        "parent_id",
+        "speaker_id",
+        "text",
+        "text_clean"
+      ],
+      "title": "Evidence",
+      "type": "object"
+    },
+    "Section": {
+      "additionalProperties": false,
+      "properties": {
+        "heading": {
+          "title": "Heading",
+          "type": "string"
+        },
+        "points": {
+          "items": {
+            "$ref": "#/$defs/Claim"
+          },
+          "title": "Points",
+          "type": "array"
+        }
+      },
+      "required": [
+        "heading",
+        "points"
+      ],
+      "title": "Section",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "report_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Report Version",
+      "type": "string"
+    },
+    "conversation_id": {
+      "title": "Conversation Id",
+      "type": "string"
+    },
+    "conversation_source_id": {
+      "title": "Conversation Source Id",
+      "type": "string"
+    },
+    "title": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Title"
+    },
+    "source_url": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Source Url"
+    },
+    "query": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Query"
+    },
+    "summary": {
+      "items": {
+        "$ref": "#/$defs/Claim"
+      },
+      "title": "Summary",
+      "type": "array"
+    },
+    "sections": {
+      "items": {
+        "$ref": "#/$defs/Section"
+      },
+      "title": "Sections",
+      "type": "array"
+    },
+    "agreements": {
+      "items": {
+        "$ref": "#/$defs/Claim"
+      },
+      "title": "Agreements",
+      "type": "array"
+    },
+    "disagreements": {
+      "items": {
+        "$ref": "#/$defs/Claim"
+      },
+      "title": "Disagreements",
+      "type": "array"
+    },
+    "questions": {
+      "items": {
+        "$ref": "#/$defs/Claim"
+      },
+      "title": "Questions",
+      "type": "array"
+    },
+    "open_questions": {
+      "items": {
+        "$ref": "#/$defs/Claim"
+      },
+      "title": "Open Questions",
+      "type": "array"
+    },
+    "evidence": {
+      "additionalProperties": {
+        "$ref": "#/$defs/Evidence"
+      },
+      "title": "Evidence",
+      "type": "object"
+    },
+    "conversation_quality": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ConversationQuality"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "topic_assignments": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "title": "Topic Assignments",
+      "type": "object"
+    },
+    "components": {
+      "additionalProperties": {
+        "$ref": "#/$defs/ComponentStatus"
+      },
+      "title": "Components",
+      "type": "object"
+    },
+    "limitations": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Limitations",
+      "type": "array"
+    }
+  },
+  "required": [
+    "conversation_id",
+    "conversation_source_id",
+    "title",
+    "source_url",
+    "query",
+    "summary",
+    "sections",
+    "evidence",
+    "components",
+    "limitations"
+  ],
+  "title": "InsightReport",
+  "type": "object"
+}

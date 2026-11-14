@@ -1,5 +1,42 @@
 # November integration validation
 
+## November 14 continuation: checkpoint, evaluation and owner handoffs
+
+The uncommitted trusted-bundle changes from the prior session were explicitly reviewed, including the new `bundles.py` and `test_trusted_bundles.py`. The existing **133 tests passed in 9.69s** before checkpointing. Only those 10 reviewed files were staged and locally committed as `7a496c2` (`feat(cli): support opt-in trusted fitted-model bundles`). The historical section below describes their earlier uncommitted state. No protected or unrelated file was included.
+
+The continuation adds a reusable curated retrieval evaluator, source-supported proposed judgments/results, a report schema snapshot/current sample for Gia's review, and an isolated deterministic mock synthesis example for Aisha. No runtime retrieval, pipeline, report renderer/schema class, teammate model, or exact-quotation validation implementation was changed. CI's existing lint/format commands now include the Python examples.
+
+| Check actually executed | Observed result |
+|---|---|
+| `git fetch origin`, issue/PR/discussion reads and repository PR searches | Issues #17 and #24–28 open; PR #22 open/unmerged; PR #23 draft/unmerged. No PRs updated since Nov 8. Remote main `e734489`, integration `f46ec2a`. See [audit](november-team-audit.md). |
+| `uv sync --locked` | Passed; 136 packages resolved, 19 checked; no dependency change in this continuation |
+| `HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 uv run --offline pytest -q` | Final run: **161 passed in 12.38s**, 0 failed; 28 additions to the checkpoint's 133 |
+| `uv run --offline pytest -q tests/integration/test_trusted_bundles.py` | **14 passed in 9.97s**, including serialized synthetic objects and both executable entry points |
+| `uv run ruff check src/discussion_intelligence tests/integration examples` | All checks passed |
+| `uv run ruff format --check src/discussion_intelligence tests/integration examples` | 24 files already formatted |
+| `uv build --quiet` | Wheel and source archive built successfully |
+| `uv run --offline python examples/evaluate_retrieval.py` | Measured macro Recall@1/2/3: **0.7291666667 / 0.8333333333 / 0.875** on 8 positive queries; no-answer abstention **0.5** on 2 queries |
+| JSON evaluation regeneration to `/tmp/rohan-nov14-retrieval-evaluation.json`, then `cmp` with committed results | Byte-identical; no query/label changes after measurement |
+| Default build-help JSON/Markdown CLI plus second-thread karma Markdown CLI | Byte-identical to committed examples; original IDs/links/citations retained |
+| `uv run --offline python examples/synthesis_provider_demo.py --mode quote`, `--mode fabricated`, `--mode error` | All documented modes ran. Quotation accepted; fabrication and exception rejected with extractive fallback. Every demo says no LLM executed. |
+| Installed-wheel evaluation from `/tmp` using `uv run --offline --no-project --python <checkout>/.venv/bin/python --with <checkout>/dist/discussion_intelligence_toolkit-0.1.0-py3-none-any.whl python ...` | Imported from uv site-packages outside checkout; reproduced committed evaluation exactly |
+| Wheel/source inventory | Wheel includes `retrieval_evaluation.py`; source archive includes judgments/results, examples, schema, sample and new tests. Protected files and model artifacts excluded. |
+| `git diff --check`, SHA-256 comparisons | Passed. All five protected files retain the same hashes recorded below and remain untracked. |
+
+The 10-query set is **agent-authored, source-inspected and pending Franceli/team review**, on two familiar reference conversations. It is not independently human annotated, held out, representative, or evidence of generalization. The paraphrase miss and overlapping-vocabulary false positive are retained. No deleted content exists in the actual references; a controlled deletion mutation is tested separately and excluded from measurements. See [methodology and per-case results](retrieval-evaluation.md).
+
+The tests cover known metric arithmetic with a stub retriever, undefined/no-answer denominators, quoted relevance support, altered IDs/text/links, invalid ranked lists/cutoffs, source hash drift, controlled deletion, schema/sample consistency and mock-only synthesis/fallback. Scientific-library scores are compared with floating-point tolerance across supported versions while rankings, source identities and metric values remain checked. Synthetic fitted models and deterministic mocks establish interfaces only. No production classifier/civility/embedding/clustering artifact or LLM was integrated or evaluated.
+
+Files in the separate continuation commit:
+
+- New runtime/evaluation: `src/discussion_intelligence/retrieval_evaluation.py`, `examples/evaluate_retrieval.py`, `examples/retrieval-judgments.json`, `examples/retrieval-evaluation.json`.
+- New review examples: `examples/insight-report.schema.json`, `examples/karma-report.md`, `examples/synthesis_provider_demo.py`.
+- New tests: `tests/integration/test_retrieval_evaluation.py`, `tests/integration/test_review_examples.py`.
+- New owner-facing documentation: `docs/november-team-audit.md`, `docs/retrieval-evaluation.md`, `docs/report-contract-proposal.md`.
+- Updated navigation/validation: `README.md`, `docs/ROHAN_INTEGRATION_HANDOFF.md`, `docs/integration-contracts.md`, `docs/integration-validation.md`, `.github/workflows/tests.yml`.
+
+Both commits stay local on Rohan's integration branch. No push, merge, issue closure or PR-ready transition is authorized or performed. Production artifacts, final report decisions, real synthesis and independent held-out/human evaluation remain owner handoffs documented in the audit.
+
 ## November 14 follow-up: trusted fitted bundles in the CLI
 
 Audited on `rohan/november-toolkit-integration` at `f46ec2a`, after `git fetch origin`: local HEAD matched the integration branch's remote head; `origin/main` remained `e734489` (main has 0 unique commits, integration has 3). PR #23 was open/draft and PR #22 open/unmerged. Before this session's edits, the existing suite passed **119 tests in 14.04s**, and the RAID Markdown CLI demo worked with the optional models unavailable. No tracked fitted checkpoint was found.
