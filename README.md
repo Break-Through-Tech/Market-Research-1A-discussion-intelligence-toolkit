@@ -93,6 +93,23 @@ Component statuses distinguish unavailable models from failed models. The pipeli
 
 See [integration contracts](docs/integration-contracts.md) and the executable [artifact example](examples/fitted_model_integration.py). The pipeline never imports training experiments or calls `fit()`.
 
+The normal CLI can explicitly load a model-owner bundle. **Only supply files you trust: pickle/joblib deserialization can execute code.** Bundle validation happens after loading and cannot make an untrusted artifact safe. Without `--trusted-bundle`, the CLI never loads an artifact and keeps its existing behavior.
+
+```bash
+# Replace this path with a trusted bundle exported by the model owner.
+uv run --offline discussion-intelligence \
+  --input data/coarse-discourse-reference-sample.jsonl \
+  --trusted-bundle /path/to/trusted-fitted-models.joblib \
+  --query "RAID data drives" --top-k 3 --format json
+
+# Self-contained synthetic interface checks; no production artifacts required.
+# Creates tiny fitted sklearn objects in temporary test directories and runs
+# both the CLI and the fitted-model example. NOT production model results.
+uv run --offline pytest -q tests/integration/test_trusted_bundles.py
+```
+
+Supported bundle keys are `discourse_model` (text classifier), or `context_model` with both `target_vectorizer` and `parent_vectorizer`; `civility_model` with optional `civility_model_name`; `topic_clusterer` (`assign` interface); and `embedder` (`embed` interface). Context objects take precedence if both classifiers are present, matching the existing example. Missing components stay unavailable; supplied components that fail stay explicitly failed. Predictions retain source IDs and never use gold annotations. Civility remains a conversation-level estimate. Model classes and compatible dependencies must already be installed; loading a bundle does not install dependencies or select/download a checkpoint.
+
 Optional installations are explicit:
 
 ```bash

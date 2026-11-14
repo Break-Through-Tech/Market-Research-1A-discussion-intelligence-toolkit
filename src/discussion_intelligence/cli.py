@@ -5,6 +5,7 @@ from pathlib import Path
 
 from artifacts.schema import Conversation
 
+from .bundles import load_trusted_bundle
 from .pipeline import analyze
 from .sample import load_reference_conversations
 
@@ -20,6 +21,13 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--top-k", type=int, default=5)
     parser.add_argument("--format", choices=("json", "markdown"), default="markdown")
     parser.add_argument("--output", type=Path, help="Output file; default is stdout")
+    parser.add_argument(
+        "--trusted-bundle",
+        type=Path,
+        metavar="PATH",
+        help="Opt in to loading fitted joblib objects from PATH. Only use trusted files: "
+        "pickle/joblib deserialization can execute code.",
+    )
     args = parser.parse_args(argv)
     try:
         if args.conversation_index < 0:
@@ -33,7 +41,13 @@ def main(argv: list[str] | None = None) -> int:
             raise ValueError(
                 f"conversation-index outside input containing {len(conversations)} conversations"
             )
-        report = analyze(conversations[args.conversation_index], query=args.query, top_k=args.top_k)
+        components = load_trusted_bundle(args.trusted_bundle) if args.trusted_bundle else {}
+        report = analyze(
+            conversations[args.conversation_index],
+            query=args.query,
+            top_k=args.top_k,
+            **components,
+        )
         result = report.to_json() if args.format == "json" else report.to_markdown()
         if args.output:
             args.output.parent.mkdir(parents=True, exist_ok=True)

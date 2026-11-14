@@ -12,14 +12,8 @@ This file does not include trained artifacts or claim the team's model is shippe
 import argparse
 from pathlib import Path
 
-import joblib
-
 from discussion_intelligence import analyze
-from discussion_intelligence.adapters import (
-    ContextClassifierAdapter,
-    ConversationCivilityAdapter,
-    TextClassifierAdapter,
-)
+from discussion_intelligence.bundles import load_trusted_bundle
 from discussion_intelligence.sample import load_reference_conversations
 
 
@@ -28,25 +22,9 @@ def main():
     parser.add_argument("--bundle", type=Path, required=True, help="Trusted fitted joblib bundle")
     parser.add_argument("--input", type=Path, required=True, help="Reference JSONL")
     args = parser.parse_args()
-    bundle = joblib.load(args.bundle)
-    classifier = None
-    if "context_model" in bundle:
-        classifier = ContextClassifierAdapter(
-            bundle["context_model"], bundle["target_vectorizer"], bundle["parent_vectorizer"]
-        )
-    elif "discourse_model" in bundle:
-        classifier = TextClassifierAdapter(bundle["discourse_model"])
-    quality = None
-    if "civility_model" in bundle:
-        quality = ConversationCivilityAdapter(
-            bundle["civility_model"], model_name=bundle.get("civility_model_name", "owner-supplied")
-        )
     report = analyze(
         load_reference_conversations(args.input)[0],
-        classifier=classifier,
-        quality_scorer=quality,
-        clusterer=bundle.get("topic_clusterer"),
-        embedder=bundle.get("embedder"),
+        **load_trusted_bundle(args.bundle),
     )
     print(report.to_json())
 

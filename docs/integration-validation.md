@@ -1,5 +1,56 @@
 # November integration validation
 
+## November 14 follow-up: trusted fitted bundles in the CLI
+
+Audited on `rohan/november-toolkit-integration` at `f46ec2a`, after `git fetch origin`: local HEAD matched the integration branch's remote head; `origin/main` remained `e734489` (main has 0 unique commits, integration has 3). PR #23 was open/draft and PR #22 open/unmerged. Before this session's edits, the existing suite passed **119 tests in 14.04s**, and the RAID Markdown CLI demo worked with the optional models unavailable. No tracked fitted checkpoint was found.
+
+The targeted change adds explicit `--trusted-bundle PATH` support to the normal CLI, shares the original example's loading logic in `discussion_intelligence.bundles`, reuses existing adapters, and declares joblib directly. The loader checks the mapping and complete context triplet after loading, and reports load errors clearly. **Pickle/joblib deserialization can execute code; validation does not make an untrusted artifact safe.** No deserialization occurs without an explicit bundle path. No pipeline, retrieval algorithm, clustering implementation, report design, teammate model, or LLM synthesis code was changed.
+
+| Command/check actually executed | Result |
+|---|---|
+| `uv lock` | 136 packages resolved; only direct joblib dependency metadata added to the existing lock |
+| `uv sync --locked` | Passed; 19 packages checked |
+| `uv run pytest -q` | **133 passed in 2.70s**, 0 failed |
+| `uv run ruff check src/discussion_intelligence tests/integration` | All checks passed |
+| `uv run ruff format --check src/discussion_intelligence tests/integration` | 16 files already formatted |
+| `uv run --offline ruff check examples/fitted_model_integration.py` | All checks passed |
+| `uv run --offline ruff format --check examples/fitted_model_integration.py` | 1 file already formatted |
+| `uv build` | Source archive and wheel built successfully |
+| `uv run --offline pytest -q tests/integration/test_trusted_bundles.py` | **14 passed in 2.36s**, including subprocess CLI/example smoke tests |
+| Default RAID JSON and Markdown CLI demos, followed by `cmp` with both committed examples | Both byte-identical; first citation `reddit:t1_c6fwalq`; 7 evidence utterances |
+| CLI JSON/Markdown and `examples/fitted_model_integration.py --bundle ...` using temporary synthetic fitted text/civility objects | Passed; discourse predicted 7/7 labels, civility available, clustering/embeddings unavailable; all citations validated |
+| Isolated offline wheel CLI from outside the checkout, with the same synthetic bundle | Passed; JSON byte-identical to checkout CLI output |
+| Wheel/source archive inventory | New loader and direct joblib dependency included; source archive includes smoke tests; protected files, `demo-output/`, and checkpoints excluded |
+| `git diff --check` and protected-file SHA-256 comparison | Passed; all five pre-existing untracked files retained their initial hashes |
+
+The new tests fit tiny sklearn objects **only in test setup on invented data**. They check both text and target/parent inference, prohibit fitting supplied classifiers during analysis, verify conversation-level civility, pass through assignment/embedding test doubles, exercise missing/corrupt/incomplete bundles, and check that absent/failed components never become gold-label predictions. IDs, parents, raw source text and source URLs are preserved; fabricated quotations still fail JSON and Markdown serialization. These are **interface checks, not production model results, model accuracy, or evidence of production artifacts being integrated**.
+
+Reproduce the default demo and the self-contained fitted-model smoke checks:
+
+```bash
+uv sync --locked
+uv run --offline discussion-intelligence \
+  --input data/coarse-discourse-reference-sample.jsonl \
+  --query "RAID data drives" --top-k 3 --format markdown
+uv run --offline pytest -q tests/integration/test_trusted_bundles.py
+```
+
+The executed manual demo used a synthetic-only bundle in the temporary directory `/var/folders/0t/v4t4jgjj3b7g8shzry6ps51c0000gn/T/rohan-nov14-integration-oflpdjy8`. `synthetic-interface-only.joblib` contains a fitted tiny TF-IDF/logistic-regression text pipeline and a constant dummy civility regressor named `synthetic-interface-only-not-production`. Its value `0.37` is invented test output, not a trained civility result. Reports are `default-report.{json,md}`, `synthetic-interface-report.{json,md}`, `example-synthetic-report.json`, and `wheel-synthetic-report.json`. These temporary artifacts are outside the repository and may be removed by the OS. The pytest command recreates its own synthetic bundles without these files.
+
+The five protected file hashes at the start and end of this session were:
+
+```text
+5fc8b642f3cd380ff10f82e0432469bcdbc1cd02275d3eb3ef9860998fbc6d0b  .DS_Store
+e667bb1629c69e5270be9f4cc3d8f5add2ec278584859c5506ef3363947dac50  demo-output/report.md
+7b235b1158aedcff13cf75e2aedf8670ddb05e6d286f21f70f451439d4e33172  leagueoflegends_data.csv
+e8baf77670b605706f813fdae2ac885ad7a4df5f11c8f2ee9d6fa4b2c53f74a9  subreddit_conversation_counts.txt
+26c6f82151a90c9afa2c43c551b9b64621423eb79b99cda1e88a3b9103d6a49a  subreddits_small_sample.txt
+```
+
+No files were staged or committed, and no remote changes were pushed. No teammate PR was merged, issue closed, or PR marked ready. Remaining dependencies are versioned model-owner artifacts and preprocessing/runtime contracts, review of PR #22 and civility semantics/model selection, Franceli's retrieval/clustering work, Gia's final report format, and Aisha's LLM synthesis. Local results do not claim remote CI success.
+
+## November 7 validation record
+
 Local validation on 2026-11-07 (America/Phoenix), branch `rohan/november-toolkit-integration`, audit base `e734489`. Implementation was prepared by the coding agent for Rohan's review. No teammate model was retrained for these checks.
 
 ## Actual executed commands and results

@@ -64,9 +64,9 @@ This import is intentionally absent from the current pipeline: `utils.quality` i
 
 Supply an object implementing `assign(utterances)` with canonical IDs. The pipeline groups selected excerpts under `Topic cluster <id>`; it does not invent a semantic theme title. Unassigned/mixed-cluster evidence goes under `Discussion excerpts`. Persisted assignments can be exposed by a small mapping adapter; online clustering belongs to the cluster owner. No clustering algorithm is duplicated by this branch.
 
-## Trusted artifact example
+## Trusted artifacts in the CLI and example
 
-`examples/fitted_model_integration.py` loads a trusted joblib mapping with any of:
+The CLI's opt-in `--trusted-bundle PATH` and `examples/fitted_model_integration.py` share one loader and reuse the existing adapters. They accept a trusted joblib mapping with any of:
 
 - `discourse_model`: fitted text classifier;
 - `context_model`, `target_vectorizer`, `parent_vectorizer`: Franceli-compatible fitted context objects;
@@ -74,13 +74,29 @@ Supply an object implementing `assign(utterances)` with canonical IDs. The pipel
 - `topic_clusterer`: object implementing `assign`;
 - `embedder`: object implementing `embed`.
 
+All three context keys are required together. As in the original example, a complete context classifier takes precedence over `discourse_model` when both are present. Omitted components remain unavailable; inference failures are reported by the pipeline. A malformed mapping, incomplete context bundle, or unreadable/incompatible artifact is a CLI error. Models' original importable classes and compatible package versions must be installed separately; this loader does not train, install dependencies, or initiate model downloads.
+
+**Pickle/joblib deserialization can execute code. Load only trusted model-owner artifacts.** Mapping checks occur after deserialization; they are not a security boundary. No checkpoint is included in this repository. A production artifact still requires the original owner's review and domain evaluation. Without the explicit option, the normal CLI does not deserialize any model file. No API key or external service is used by the toolkit's loader.
+
 ```bash
+uv run --offline discussion-intelligence \
+  --trusted-bundle /path/to/trusted-fitted-models.joblib \
+  --input data/coarse-discourse-reference-sample.jsonl \
+  --query "RAID data drives" --top-k 3 --format json
+
+# The original example's --bundle interface remains supported.
 uv run --offline python examples/fitted_model_integration.py \
   --bundle /path/to/trusted-fitted-models.joblib \
   --input data/coarse-discourse-reference-sample.jsonl
 ```
 
-Joblib artifacts can execute code on load. Load only model-owner artifacts you trust; no checkpoint is included in this repository. A production artifact still requires the original owner's review and domain evaluation. The normal CLI does not load artifacts and has no paid-service dependency.
+For a self-contained smoke test with tiny synthetic fitted sklearn objects:
+
+```bash
+uv run --offline pytest -q tests/integration/test_trusted_bundles.py
+```
+
+This exercises serialized text/context classifiers, conversation civility, existing assignment/embedding interfaces, load errors, missing/failed components, gold-label isolation, source IDs and citation validation. Subprocess checks execute both the CLI and the original example. These are interface checks, **not production model results or accuracy evaluation**. Only test setup trains on invented data; runtime inference never fits a supplied model.
 
 ## Synthesis and grounding
 

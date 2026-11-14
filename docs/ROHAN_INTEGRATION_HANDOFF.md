@@ -2,6 +2,8 @@
 
 Prepared for review on `rohan/november-toolkit-integration`, based on `e734489` (2026-11-07, America/Phoenix). This is implementation work prepared by the coding agent on Rohan Verma's branch for Rohan and the team to review. It is not a claim that Rohan personally authored the generated code, or that this branch authored the team's prior models.
 
+**November 14 follow-up:** the normal CLI now accepts an explicit `--trusted-bundle PATH`. It and the existing fitted-model example share `discussion_intelligence.bundles.load_trusted_bundle`, which reuses the fitted adapters and documented keys. Joblib is now a direct package dependency. Pickle/joblib deserialization can execute code; only trusted files should be supplied. Default CLI behavior and report contracts are unchanged. New synthetic interface checks run with `uv run --offline pytest -q tests/integration/test_trusted_bundles.py`; they do not establish production model integration or accuracy. See the dated follow-up in [validation](integration-validation.md) for executed results. The original sections below describe the November 7 work.
+
 ## 1. The project in beginner-friendly terms
 
 A conversation is a tree. The original post is its root; replies point to their immediate parents. Different source websites format posts differently, so connectors first translate them into the same Python objects:
