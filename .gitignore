@@ -8,3 +8,15 @@ __pycache__/
 
 # Generated cleaned dataset from Issue #9
 users/franceli/dataset_finalization/cleaning/cleaned_discourse_dataset.csv
+
+# Local environments, builds, model artifacts and credentials
+.venv/
+.ruff_cache/
+build/
+dist/
+*.egg-info/
+*.joblib
+*.pkl
+*.safetensors
+.env
+.env.*

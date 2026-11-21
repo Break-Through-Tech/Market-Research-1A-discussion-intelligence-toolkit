@@ -1,0 +1,239 @@
+{
+  "report_version": "1.0",
+  "conversation_id": "reddit:t3_10r2f8",
+  "conversation_source_id": "t3_10r2f8",
+  "title": "[Build Help] First time building. $1500 build.",
+  "source_url": "https://www.reddit.com/r/buildapc/comments/10r2f8/build_help_first_time_building_1500_build/",
+  "query": "RAID data drives",
+  "summary": [
+    {
+      "text": "1. [I'm a fan of MSi cards personally](http://pcpartpicker.com/part/msi-video-card-r7970lightning). 2. I assume you mean RAID-0? Never use RAID-0 for your data drives, it increases the likelihood of lost data due to a drive failure. If you want a RAID, then do a RAID-5/6 with three drives, but I don't see why you would need much faster than a single 7200 for your data drive since you have an SSD.",
+      "evidence_ids": [
+        "reddit:t1_c6fwalq"
+      ]
+    },
+    {
+      "text": "This is my first build and I want to make sure to get it right. I have a few questions. 1.) What is the best version of the 7970 video card if I plan to overclock? 2.) Would it be better to get a 2tb hhd or two 1tb hhd and set up a raid? 3.) As a student are there any additional discounts that I can qualify for? Here is my current build set up: [PCPartPicker part list](http://pcpartpicker.com/p/j2",
+      "evidence_ids": [
+        "reddit:t3_10r2f8"
+      ]
+    }
+  ],
+  "sections": [
+    {
+      "heading": "Discussion excerpts",
+      "points": [
+        {
+          "text": "1. [I'm a fan of MSi cards personally](http://pcpartpicker.com/part/msi-video-card-r7970lightning). 2. I assume you mean RAID-0? Never use RAID-0 for your data drives, it increases the likelihood of lost data due to a drive failure. If you want a RAID, then do a RAID-5/6 with three drives, but I don't see why you would need much faster than a single 7200 for your data drive since you have an SSD.",
+          "evidence_ids": [
+            "reddit:t1_c6fwalq"
+          ]
+        },
+        {
+          "text": "This is my first build and I want to make sure to get it right. I have a few questions. 1.) What is the best version of the 7970 video card if I plan to overclock? 2.) Would it be better to get a 2tb hhd or two 1tb hhd and set up a raid? 3.) As a student are there any additional discounts that I can qualify for? Here is my current build set up: [PCPartPicker part list](http://pcpartpicker.com/p/j2",
+          "evidence_ids": [
+            "reddit:t3_10r2f8"
+          ]
+        }
+      ]
+    }
+  ],
+  "agreements": [],
+  "disagreements": [],
+  "questions": [],
+  "open_questions": [],
+  "evidence": {
+    "reddit:t1_c6fwalq": {
+      "id": "reddit:t1_c6fwalq",
+      "conversation_id": "reddit:t3_10r2f8",
+      "source_id": "t1_c6fwalq",
+      "parent_id": "reddit:t3_10r2f8",
+      "speaker_id": "reddit:u/anon_2ac5ec81f1fc",
+      "text": "1. [I'm a fan of MSi cards personally](http://pcpartpicker.com/part/msi-video-card-r7970lightning).\n2. I assume you mean RAID-0? Never use RAID-0 for your data drives, it increases the likelihood of lost data due to a drive failure.  If you want a RAID, then do a RAID-5/6 with three drives, but I don't see why you would need much faster than a single 7200 for your data drive since you have an SSD.\n3. Not sure honestly, maybe someone else will step in here.",
+      "text_clean": "1. [I'm a fan of MSi cards personally](http://pcpartpicker.com/part/msi-video-card-r7970lightning). 2. I assume you mean RAID-0? Never use RAID-0 for your data drives, it increases the likelihood of lost data due to a drive failure. If you want a RAID, then do a RAID-5/6 with three drives, but I don't see why you would need much faster than a single 7200 for your data drive since you have an SSD. 3. Not sure honestly, maybe someone else will step in here.",
+      "source_url": null,
+      "conversation_url": "https://www.reddit.com/r/buildapc/comments/10r2f8/build_help_first_time_building_1500_build/",
+      "created_at": null,
+      "metadata": {
+        "timestamp_missing": true,
+        "discourse_act_gold": "answer",
+        "annotation_types": null,
+        "annotator_agreement": null,
+        "majority_link": null,
+        "speaker_missing": true
+      },
+      "discourse_act": null,
+      "argument_quality_score": null
+    },
+    "reddit:t1_c6fwamd": {
+      "id": "reddit:t1_c6fwamd",
+      "conversation_id": "reddit:t3_10r2f8",
+      "source_id": "t1_c6fwamd",
+      "parent_id": "reddit:t3_10r2f8",
+      "speaker_id": "reddit:u/anon_2ac5ec81f1fc",
+      "text": "You're looking for discounts, and while it's not a student one I'd highly suggest dropping to 8GB of RAM instead of 16. Unless you 100% know you'll need it.",
+      "text_clean": "You're looking for discounts, and while it's not a student one I'd highly suggest dropping to 8GB of RAM instead of 16. Unless you 100% know you'll need it.",
+      "source_url": null,
+      "conversation_url": "https://www.reddit.com/r/buildapc/comments/10r2f8/build_help_first_time_building_1500_build/",
+      "created_at": null,
+      "metadata": {
+        "timestamp_missing": true,
+        "discourse_act_gold": "answer",
+        "annotation_types": null,
+        "annotator_agreement": null,
+        "majority_link": null,
+        "speaker_missing": true
+      },
+      "discourse_act": null,
+      "argument_quality_score": null
+    },
+    "reddit:t1_c6fwcz8": {
+      "id": "reddit:t1_c6fwcz8",
+      "conversation_id": "reddit:t3_10r2f8",
+      "source_id": "t1_c6fwcz8",
+      "parent_id": "reddit:t1_c6fwamd",
+      "speaker_id": "reddit:u/anon_2ac5ec81f1fc",
+      "text": "I'm not worrying about money but its always nice to save some when you can.",
+      "text_clean": "I'm not worrying about money but its always nice to save some when you can.",
+      "source_url": null,
+      "conversation_url": "https://www.reddit.com/r/buildapc/comments/10r2f8/build_help_first_time_building_1500_build/",
+      "created_at": null,
+      "metadata": {
+        "timestamp_missing": true,
+        "discourse_act_gold": "elaboration",
+        "annotation_types": null,
+        "annotator_agreement": null,
+        "majority_link": null,
+        "speaker_missing": true
+      },
+      "discourse_act": null,
+      "argument_quality_score": null
+    },
+    "reddit:t1_c6fwdkh": {
+      "id": "reddit:t1_c6fwdkh",
+      "conversation_id": "reddit:t3_10r2f8",
+      "source_id": "t1_c6fwdkh",
+      "parent_id": "reddit:t1_c6fwcz8",
+      "speaker_id": "reddit:u/anon_2ac5ec81f1fc",
+      "text": "I'd still recommend changing to 8GB, 16GB is definitely superfluous. ",
+      "text_clean": "I'd still recommend changing to 8GB, 16GB is definitely superfluous.",
+      "source_url": null,
+      "conversation_url": "https://www.reddit.com/r/buildapc/comments/10r2f8/build_help_first_time_building_1500_build/",
+      "created_at": null,
+      "metadata": {
+        "timestamp_missing": true,
+        "discourse_act_gold": "elaboration",
+        "annotation_types": null,
+        "annotator_agreement": null,
+        "majority_link": null,
+        "speaker_missing": true
+      },
+      "discourse_act": null,
+      "argument_quality_score": null
+    },
+    "reddit:t1_c6fwhtv": {
+      "id": "reddit:t1_c6fwhtv",
+      "conversation_id": "reddit:t3_10r2f8",
+      "source_id": "t1_c6fwhtv",
+      "parent_id": "reddit:t1_c6fwalq",
+      "speaker_id": "reddit:u/anon_2ac5ec81f1fc",
+      "text": "With the video card is there a significant difference to justify the $100 increase?",
+      "text_clean": "With the video card is there a significant difference to justify the $100 increase?",
+      "source_url": null,
+      "conversation_url": "https://www.reddit.com/r/buildapc/comments/10r2f8/build_help_first_time_building_1500_build/",
+      "created_at": null,
+      "metadata": {
+        "timestamp_missing": true,
+        "discourse_act_gold": "question",
+        "annotation_types": null,
+        "annotator_agreement": null,
+        "majority_link": null,
+        "speaker_missing": true
+      },
+      "discourse_act": null,
+      "argument_quality_score": null
+    },
+    "reddit:t1_c6fwmq5": {
+      "id": "reddit:t1_c6fwmq5",
+      "conversation_id": "reddit:t3_10r2f8",
+      "source_id": "t1_c6fwmq5",
+      "parent_id": "reddit:t1_c6fwhtv",
+      "speaker_id": "reddit:u/anon_2ac5ec81f1fc",
+      "text": "Well, the biggest thing with this one is that it has a higher base clock than the other 7970s.  There's another MSI card that's around the same price as the Sapphire which will overclock just as well.",
+      "text_clean": "Well, the biggest thing with this one is that it has a higher base clock than the other 7970s. There's another MSI card that's around the same price as the Sapphire which will overclock just as well.",
+      "source_url": null,
+      "conversation_url": "https://www.reddit.com/r/buildapc/comments/10r2f8/build_help_first_time_building_1500_build/",
+      "created_at": null,
+      "metadata": {
+        "timestamp_missing": true,
+        "discourse_act_gold": "answer",
+        "annotation_types": null,
+        "annotator_agreement": null,
+        "majority_link": null,
+        "speaker_missing": true
+      },
+      "discourse_act": null,
+      "argument_quality_score": null
+    },
+    "reddit:t3_10r2f8": {
+      "id": "reddit:t3_10r2f8",
+      "conversation_id": "reddit:t3_10r2f8",
+      "source_id": "t3_10r2f8",
+      "parent_id": null,
+      "speaker_id": "reddit:u/anon_2ac5ec81f1fc",
+      "text": "This is my first build and I want to make sure to get it right. I have a few questions.\n\n1.) What is the best version of the 7970 video card if I plan to overclock?\n\n2.) Would it be better to get a 2tb hhd or two 1tb hhd and set up a raid?\n\n3.) As a student are there any additional discounts that I can qualify for?\n\nHere is my current build set up:\n\n[PCPartPicker part list](http://pcpartpicker.com/p/j26g) / [Price breakdown by merchant](http://pcpartpicker.com/p/j26g/by_merchant/) / [Benchmarks](http://pcpartpicker.com/p/j26g/benchmarks/)\n\nType|Item|Price\n:----|:----|:----\n**CPU** | [Intel Core i5-3570K 3.4GHz Quad-Core Processor](http://pcpartpicker.com/part/intel-cpu-bx80637i53570k) | $189.99 @ Microcenter \n**CPU Cooler** | [Zalman CNPS9500 AT Ball Bearing CPU Cooler](http://pcpartpicker.com/part/zalman-cpu-cooler-cnps9500at) | $33.99 @ Newegg \n**Motherboard** | [ASRock Z77 Extreme4 ATX  LGA1155 Motherboard](http://pcpartpicker.com/part/asrock-motherboard-z77extreme4) | $134.99 @ Amazon \n**Memory** | [Corsair Vengeance 16GB (4 x 4GB) DDR3-1600 Memory](http://pcpartpicker.com/part/corsair-memory-cmz16gx3m4a1600c9) | $78.99 @ Newegg \n**Storage** | [Samsung Spinpoint F3 1TB 3.5\" 7200RPM Internal Hard Drive](http://pcpartpicker.com/part/samsung-internal-hard-drive-hd103sj) | $88.98 @ Newegg \n**Storage** | [Crucial M4 128GB 2.5\" Solid State Disk](http://pcpartpicker.com/part/crucial-internal-hard-drive-ct128m4ssd2) | $94.99 @ Microcenter \n**Video Card** | [Sapphire Radeon HD 7970 3GB Video Card](http://pcpartpicker.com/part/sapphire-video-card-211970040g) | $409.99 @ Newegg \n**Case** | [Cooler Master HAF 922 ATX Mid Tower Case](http://pcpartpicker.com/part/cooler-master-case-rc922mkkn1gp) | $93.89 @ NCIX US \n**Power Supply** | [Corsair Professional 750W 80 PLUS Silver Certified ATX12V / EPS12V Power Supply](http://pcpartpicker.com/part/corsair-power-supply-cmpsu750hx) | $99.99 @ NCIX US \n**Optical Drive** | [Asus DRW-24B1ST/BLK/B/AS DVD/CD Writer](http://pcpartpicker.com/part/asus-optical-drive-drw24b1stblkbas) | $19.99 @ Newegg \n**Monitor** | [Asus VH236H 23.0\" Monitor](http://pcpartpicker.com/part/asus-monitor-vh236h) | $139.99 @ NCIX US \n**Operating System** | [Microsoft Windows 7 Home Premium SP1 (64-bit)](http://pcpartpicker.com/part/microsoft-os-gfc02050) | $90.48 @ Amazon \n | | **Total**\n | Prices include shipping, taxes, and discounts when available. | $1476.26",
+      "text_clean": "This is my first build and I want to make sure to get it right. I have a few questions. 1.) What is the best version of the 7970 video card if I plan to overclock? 2.) Would it be better to get a 2tb hhd or two 1tb hhd and set up a raid? 3.) As a student are there any additional discounts that I can qualify for? Here is my current build set up: [PCPartPicker part list](http://pcpartpicker.com/p/j26g) / [Price breakdown by merchant](http://pcpartpicker.com/p/j26g/by_merchant/) / [Benchmarks](http://pcpartpicker.com/p/j26g/benchmarks/) Type|Item|Price :----|:----|:---- **CPU** | [Intel Core i5-3570K 3.4GHz Quad-Core Processor](http://pcpartpicker.com/part/intel-cpu-bx80637i53570k) | $189.99 @ Microcenter **CPU Cooler** | [Zalman CNPS9500 AT Ball Bearing CPU Cooler](http://pcpartpicker.com/part/zalman-cpu-cooler-cnps9500at) | $33.99 @ Newegg **Motherboard** | [ASRock Z77 Extreme4 ATX LGA1155 Motherboard](http://pcpartpicker.com/part/asrock-motherboard-z77extreme4) | $134.99 @ Amazon **Memory** | [Corsair Vengeance 16GB (4 x 4GB) DDR3-1600 Memory](http://pcpartpicker.com/part/corsair-memory-cmz16gx3m4a1600c9) | $78.99 @ Newegg **Storage** | [Samsung Spinpoint F3 1TB 3.5\" 7200RPM Internal Hard Drive](http://pcpartpicker.com/part/samsung-internal-hard-drive-hd103sj) | $88.98 @ Newegg **Storage** | [Crucial M4 128GB 2.5\" Solid State Disk](http://pcpartpicker.com/part/crucial-internal-hard-drive-ct128m4ssd2) | $94.99 @ Microcenter **Video Card** | [Sapphire Radeon HD 7970 3GB Video Card](http://pcpartpicker.com/part/sapphire-video-card-211970040g) | $409.99 @ Newegg **Case** | [Cooler Master HAF 922 ATX Mid Tower Case](http://pcpartpicker.com/part/cooler-master-case-rc922mkkn1gp) | $93.89 @ NCIX US **Power Supply** | [Corsair Professional 750W 80 PLUS Silver Certified ATX12V / EPS12V Power Supply](http://pcpartpicker.com/part/corsair-power-supply-cmpsu750hx) | $99.99 @ NCIX US **Optical Drive** | [Asus DRW-24B1ST/BLK/B/AS DVD/CD Writer](http://pcpartpicker.com/part/asus-optical-drive-drw24b1stblkbas) | $19.99 @ Newegg **Monitor** | [Asus VH236H 23.0\" Monitor](http://pcpartpicker.com/part/asus-monitor-vh236h) | $139.99 @ NCIX US **Operating System** | [Microsoft Windows 7 Home Premium SP1 (64-bit)](http://pcpartpicker.com/part/microsoft-os-gfc02050) | $90.48 @ Amazon | | **Total** | Prices include shipping, taxes, and discounts when available. | $1476.26",
+      "source_url": null,
+      "conversation_url": "https://www.reddit.com/r/buildapc/comments/10r2f8/build_help_first_time_building_1500_build/",
+      "created_at": null,
+      "metadata": {
+        "timestamp_missing": true,
+        "discourse_act_gold": "question",
+        "annotation_types": null,
+        "annotator_agreement": null,
+        "majority_link": null,
+        "speaker_missing": true
+      },
+      "discourse_act": null,
+      "argument_quality_score": null
+    }
+  },
+  "conversation_quality": null,
+  "topic_assignments": {},
+  "components": {
+    "discourse": {
+      "state": "unavailable",
+      "detail": "No fitted classifier supplied."
+    },
+    "quality": {
+      "state": "unavailable",
+      "detail": "No fitted conversation civility scorer supplied."
+    },
+    "clustering": {
+      "state": "unavailable",
+      "detail": "No topic clusterer supplied; excerpts are ungrouped."
+    },
+    "embeddings": {
+      "state": "unavailable",
+      "detail": "No embedder supplied; TF-IDF is used."
+    },
+    "synthesis": {
+      "state": "available",
+      "detail": "Deterministic extractive fallback; no LLM required."
+    },
+    "retrieval": {
+      "state": "available",
+      "detail": "tfidf cosine; 2 selected excerpts."
+    }
+  },
+  "limitations": [
+    "Excerpts represent participants' statements, not verified facts or a complete digest.",
+    "TF-IDF measures lexical relevance; representative excerpts use centroid similarity.",
+    "Labels identify utterance roles; they do not establish consensus, a disagreement target, or whether a question remains open.",
+    "Civility probability applies to the observed conversation context, not per-comment argument strength; domain shift and calibration require evaluation.",
+    "Extractive points contain at most the first 400 characters of a selected utterance; full source text remains in evidence.",
+    "Source timestamps are missing: canonical epoch sentinels are not real dates; evidence dates are null.",
+    "Model inputs retain parent-before-child source order when chronological order cannot be established.",
+    "Source speaker identities are missing; placeholder speaker references do not identify distinct participants."
+  ]
+}
