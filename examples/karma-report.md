@@ -1,33 +1,43 @@
 # ELI5 why comment karma is considered inferior to link karma
 
+Source: [link](<https://www.reddit.com/r/explainlikeimfive/comments/169c79/eli5_why_comment_karma_is_considered_inferior_to/>)
+
 Conversation: <code>reddit:t3_169c79</code>
 
 Query: comment karma easier
 
-## Summary
+## At a glance
+
+| | |
+|---|---|
+| Comments analyzed | 4 |
+| Comments quoted | 2 |
+| Participants | not recorded in the source |
+| Dates | not recorded in the source |
+| Themes | not available |
+| Discourse labels | not available |
+| Civility estimate | not available |
+
+## Key points
 
 > Go to any front page post and then compare the amount of link karma it generated to the amount of comment karma. Almost invariably the latter will be higher. Since more of it is being given out, it follows that it is easier to get and thus inferior.
-> [reddit:t1\_c7twyqu](#evidence-reddit%3At1_c7twyqu)
+>
+> Source: [reddit:t1\_c7twyqu](#evidence-reddit%3At1_c7twyqu)
 
 > Well normally link karma is usually more hard earned than comment karma, since you have to visit an external website. THIS IS BASED ON SPECULATION
-> [reddit:t1\_c7twpl2](#evidence-reddit%3At1_c7twpl2)
-
-## Discussion excerpts
-
-> Go to any front page post and then compare the amount of link karma it generated to the amount of comment karma. Almost invariably the latter will be higher. Since more of it is being given out, it follows that it is easier to get and thus inferior.
-> [reddit:t1\_c7twyqu](#evidence-reddit%3At1_c7twyqu)
-
-> Well normally link karma is usually more hard earned than comment karma, since you have to visit an external website. THIS IS BASED ON SPECULATION
-> [reddit:t1\_c7twpl2](#evidence-reddit%3At1_c7twpl2)
+>
+> Source: [reddit:t1\_c7twpl2](#evidence-reddit%3At1_c7twpl2)
 
 ## Component availability
 
-- **discourse**: unavailable — No fitted classifier supplied.
-- **quality**: unavailable — No fitted conversation civility scorer supplied.
-- **clustering**: unavailable — No topic clusterer supplied; excerpts are ungrouped.
-- **embeddings**: unavailable — No embedder supplied; TF-IDF is used.
-- **synthesis**: available — Deterministic extractive fallback; no LLM required.
-- **retrieval**: available — tfidf cosine; 2 selected excerpts.
+| Component | Status | Detail |
+|---|---|---|
+| discourse | unavailable | No fitted classifier supplied. |
+| quality | unavailable | No fitted conversation civility scorer supplied. |
+| clustering | unavailable | No topic clusterer supplied; excerpts are ungrouped. |
+| embeddings | unavailable | No embedder supplied; TF-IDF is used. |
+| synthesis | available | Deterministic extractive fallback; no LLM required. |
+| retrieval | available | tfidf cosine; 2 selected excerpts. |
 
 ## Limitations
 
@@ -42,23 +52,21 @@ Query: comment karma easier
 
 ## Source evidence
 
-<a id="evidence-reddit:t1_c7twpcx"></a>
+Showing 3 of 4 analyzed comments: each quoted comment and the comment it replies to. The JSON report contains all of them.
 
-### reddit:t1\_c7twpcx
+<a id="evidence-reddit:t3_169c79"></a>
 
-Source ID: <code>t1_c7twpcx</code>; parent: <code>reddit:t3_169c79</code>; speaker: <code>reddit:u/anon_2ac5ec81f1fc</code>.
+### reddit:t3\_169c79
 
-[Conversation](<https://www.reddit.com/r/explainlikeimfive/comments/169c79/eli5_why_comment_karma_is_considered_inferior_to/>)
+thread root · speaker not recorded · [conversation](<https://www.reddit.com/r/explainlikeimfive/comments/169c79/eli5_why_comment_karma_is_considered_inferior_to/>)
 
-> Reddit is based around sharing links. If no one shared links then it would be a very mediocre discussion forum.
+> I would have thought that people upvoting what you SAID is better than people upvoting what you merely linked.
 
 <a id="evidence-reddit:t1_c7twpl2"></a>
 
 ### reddit:t1\_c7twpl2
 
-Source ID: <code>t1_c7twpl2</code>; parent: <code>reddit:t3_169c79</code>; speaker: <code>reddit:u/anon_2ac5ec81f1fc</code>.
-
-[Conversation](<https://www.reddit.com/r/explainlikeimfive/comments/169c79/eli5_why_comment_karma_is_considered_inferior_to/>)
+reply to [reddit:t3\_169c79](#evidence-reddit%3At3_169c79) · speaker not recorded · [conversation](<https://www.reddit.com/r/explainlikeimfive/comments/169c79/eli5_why_comment_karma_is_considered_inferior_to/>)
 
 > Well normally link karma is usually more hard earned than comment karma, since you have to visit an external website. THIS IS BASED ON SPECULATION
 
@@ -66,18 +74,6 @@ Source ID: <code>t1_c7twpl2</code>; parent: <code>reddit:t3_169c79</code>; speak
 
 ### reddit:t1\_c7twyqu
 
-Source ID: <code>t1_c7twyqu</code>; parent: <code>reddit:t3_169c79</code>; speaker: <code>reddit:u/anon_2ac5ec81f1fc</code>.
-
-[Conversation](<https://www.reddit.com/r/explainlikeimfive/comments/169c79/eli5_why_comment_karma_is_considered_inferior_to/>)
+reply to [reddit:t3\_169c79](#evidence-reddit%3At3_169c79) · speaker not recorded · [conversation](<https://www.reddit.com/r/explainlikeimfive/comments/169c79/eli5_why_comment_karma_is_considered_inferior_to/>)
 
 > Go to any front page post and then compare the amount of link karma it generated to the amount of comment karma. Almost invariably the latter will be higher. Since more of it is being given out, it follows that it is easier to get and thus inferior.
-
-<a id="evidence-reddit:t3_169c79"></a>
-
-### reddit:t3\_169c79
-
-Source ID: <code>t3_169c79</code>; parent: <code>root</code>; speaker: <code>reddit:u/anon_2ac5ec81f1fc</code>.
-
-[Conversation](<https://www.reddit.com/r/explainlikeimfive/comments/169c79/eli5_why_comment_karma_is_considered_inferior_to/>)
-
-> I would have thought that people upvoting what you SAID is better than people upvoting what you merely linked.

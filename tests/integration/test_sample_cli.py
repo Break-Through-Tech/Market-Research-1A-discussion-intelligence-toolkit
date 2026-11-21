@@ -104,7 +104,7 @@ def test_cli_real_sample_output(tmp_path, format):
         report = json.loads(text)
         assert report["summary"][0]["evidence_ids"] == ["reddit:t1_c6fwalq"]
     else:
-        assert "# Summary" in text and "#evidence-reddit%3At1_c6fwalq" in text
+        assert "## Key points" in text and "#evidence-reddit%3At1_c6fwalq" in text
 
 
 def test_cli_canonical_and_stdout(tmp_path, capsys, conversation):

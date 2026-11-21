@@ -98,7 +98,7 @@ def test_model_enrichment_is_scoped_and_nonmutating(conversation):
     assert all(e.argument_quality_score is None for e in report.evidence.values())
     assert all(u.discourse_act is None for u in conversation.utterances)
     assert report.sections[0].heading == "Topic cluster 0"
-    assert "P(civil): 0.7000" in report.to_markdown()
+    assert "0.70 probability that the thread stays civil" in report.to_markdown()
 
 
 @pytest.mark.parametrize(
