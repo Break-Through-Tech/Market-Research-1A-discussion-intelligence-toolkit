@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import html
+from collections import Counter
 from datetime import datetime
 from typing import Any, Literal
 from urllib.parse import quote, urlsplit
@@ -119,88 +120,227 @@ class InsightReport(ReportModel):
         return validated.model_dump_json(indent=indent)
 
     def to_markdown(self) -> str:
+        """Render the reader-facing layout documented in docs/report-format.md."""
         type(self).model_validate(self.model_dump())
-        lines = [
-            f"# {_escape(self.title or self.conversation_id)}",
-            "",
-            f"Conversation: {_code(self.conversation_id)}",
-            "",
-            "## Summary",
-            "",
-        ]
-
+        lines = [f"# {_escape(self.title or self.conversation_id)}", ""]
+        if self.source_url and urlsplit(self.source_url).scheme in {"http", "https"}:
+            lines.extend([f"Source: [link](<{html.escape(self.source_url, quote=True)}>)", ""])
+        lines.extend([f"Conversation: {_code(self.conversation_id)}", ""])
         if self.query is not None:
-            lines[4:4] = [f"Query: {_escape(self.query)}", ""]
+            lines.extend([f"Query: {_escape(self.query)}", ""])
 
-        def add_claims(claims: list[Claim]) -> None:
-            if not claims:
-                lines.extend(["No supported excerpts selected.", ""])
-            for claim in claims:
-                citations = " ".join(
-                    f"[{_escape(uid)}](#evidence-{quote(uid, safe='')})"
-                    for uid in claim.evidence_ids
-                )
-                lines.extend([f"> {_escape(claim.text)}", f"> {citations}", ""])
+        lines.extend(["## At a glance", "", "| | |", "|---|---|"])
+        lines.extend(f"| {name} | {value} |" for name, value in self._overview())
+        lines.extend(["", "## Key points", ""])
+        self._add_claims(lines, self.summary)
 
-        add_claims(self.summary)
-        for section in self.sections:
-            lines.extend([f"## {_escape(section.heading)}", ""])
-            add_claims(section.points)
-        for title, claims in [
-            ("Labeled agreement excerpts", self.agreements),
-            ("Labeled disagreement excerpts", self.disagreements),
-            ("Labeled question excerpts", self.questions),
-        ]:
-            if claims:
-                lines.extend([f"## {title}", ""])
-                add_claims(claims)
-        if self.conversation_quality:
-            q = self.conversation_quality
-            citations = " ".join(
-                f"[{_escape(uid)}](#evidence-{quote(uid, safe='')})" for uid in q.evidence_ids
-            )
+        if self.topic_assignments:
+            sizes = Counter(self.topic_assignments.values())
+            themes = {f"Topic cluster {cluster}": cluster for cluster in sizes}
+            lines.extend(["## Themes", ""])
+            for section in self.sections:
+                heading = _escape(section.heading)
+                if section.heading in themes:
+                    cluster = themes[section.heading]
+                    heading = (
+                        f"Theme {_escape(cluster)} "
+                        f"({sizes[cluster]} of {len(self.evidence)} comments)"
+                    )
+                elif section.heading == "Discussion excerpts":
+                    heading = "Not assigned to a theme"
+                lines.extend([f"### {heading}", ""])
+                self._add_claims(lines, section.points)
+        else:
+            # Without themes the sections would only repeat the key points.
+            rest = [
+                point
+                for section in self.sections
+                for point in section.points
+                if point not in self.summary
+            ]
+            if rest:
+                lines.extend(["## More excerpts", ""])
+                self._add_claims(lines, rest)
+
+        labeled = sum(e.discourse_act is not None for e in self.evidence.values())
+        if labeled:
             lines.extend(
                 [
-                    "## Conversation civility estimate",
+                    "## Agreement, disagreement and questions",
                     "",
-                    f"P(civil): {q.value:.4f}; model: {_escape(q.model_name)}. {citations}",
-                    "This is a conversation-level estimate of civility.",
+                    "A label describes the role of one comment. It does not show that the "
+                    "thread reached consensus or that a question was left unanswered.",
                     "",
                 ]
             )
-        lines.extend(["## Component availability", ""])
+            for title, claims in [
+                ("Agreement", self.agreements),
+                ("Disagreement", self.disagreements),
+                ("Questions", self.questions),
+            ]:
+                lines.extend([f"### {title}", ""])
+                if claims:
+                    self._add_claims(lines, claims)
+                else:
+                    lines.extend(["None among the selected excerpts.", ""])
+        if self.open_questions:
+            lines.extend(["## Open questions", ""])
+            self._add_claims(lines, self.open_questions)
+
+        lines.extend(
+            ["## Component availability", "", "| Component | Status | Detail |", "|---|---|---|"]
+        )
         for name, status in self.components.items():
-            lines.append(f"- **{_escape(name)}**: {status.state} — {_escape(status.detail)}")
+            lines.append(f"| {_escape(name)} | {status.state} | {_escape(status.detail)} |")
         lines.extend(["", "## Limitations", ""])
         lines.extend(f"- {_escape(item)}" for item in self.limitations)
+
+        shown = self._cited_ids()
+        shown |= {
+            self.evidence[uid].parent_id
+            for uid in shown
+            if self.evidence[uid].parent_id in self.evidence
+        }
         lines.extend(["", "## Source evidence", ""])
-        for uid, evidence in self.evidence.items():
+        if len(shown) < len(self.evidence):
+            lines.extend(
+                [
+                    f"Showing {len(shown)} of {len(self.evidence)} analyzed comments: each quoted "
+                    "comment and the comment it replies to. The JSON report contains all of them.",
+                    "",
+                ]
+            )
+        for uid in self._thread_order():
+            if uid not in shown:
+                continue
+            evidence = self.evidence[uid]
+            parent = evidence.parent_id
+            if parent in shown:
+                parent_ref = f"reply to {_cite(parent)}"
+            else:
+                parent_ref = f"reply to {_code(parent)}" if parent else "thread root"
+            if evidence.metadata.get("speaker_missing"):
+                details = [parent_ref, "speaker not recorded"]
+            else:
+                details = [parent_ref, f"speaker {_code(evidence.speaker_id)}"]
+            if evidence.created_at is not None:
+                details.append(evidence.created_at.date().isoformat())
+            if evidence.discourse_act:
+                details.append(f"label {_code(evidence.discourse_act)}")
+            if uid in self.topic_assignments:
+                details.append(f"theme {_code(self.topic_assignments[uid])}")
+            if evidence.argument_quality_score is not None:
+                details.append(f"argument-quality score {evidence.argument_quality_score:.2f}")
+            for label, url in [
+                ("source", evidence.source_url),
+                ("conversation", evidence.conversation_url),
+            ]:
+                if url and urlsplit(url).scheme in {"http", "https"}:
+                    details.append(f"[{label}](<{html.escape(url, quote=True)}>)")
             lines.extend(
                 [
                     f'<a id="evidence-{html.escape(uid, quote=True)}"></a>',
                     "",
                     f"### {_escape(uid)}",
                     "",
-                    f"Source ID: {_code(evidence.source_id)}; "
-                    f"parent: {_code(evidence.parent_id or 'root')}; "
-                    f"speaker: {_code(evidence.speaker_id)}.",
+                    " · ".join(details),
+                    "",
+                    f"> {_escape(evidence.text_clean)}",
                     "",
                 ]
             )
-            if evidence.discourse_act:
-                lines.extend([f"Discourse label: {_code(evidence.discourse_act)}.", ""])
-            if evidence.argument_quality_score is not None:
-                lines.extend(
-                    [f"Supplied argument-quality score: {evidence.argument_quality_score:.4f}.", ""]
-                )
-            for label, url in [
-                ("Source", evidence.source_url),
-                ("Conversation", evidence.conversation_url),
-            ]:
-                if url and urlsplit(url).scheme in {"http", "https"}:
-                    lines.extend([f"[{label}](<{html.escape(url, quote=True)}>)", ""])
-            lines.extend([f"> {_escape(evidence.text_clean)}", ""])
         return "\n".join(lines).rstrip()
+
+    def _cited_ids(self) -> set[str]:
+        claims = [
+            *self.summary,
+            *self.agreements,
+            *self.disagreements,
+            *self.questions,
+            *self.open_questions,
+        ]
+        claims.extend(point for section in self.sections for point in section.points)
+        return {uid for claim in claims for uid in claim.evidence_ids}
+
+    def _thread_order(self) -> list[str]:
+        """Evidence IDs with every comment placed before its replies."""
+        replies: dict[str | None, list[str]] = {}
+        for uid, evidence in self.evidence.items():
+            parent = evidence.parent_id if evidence.parent_id in self.evidence else None
+            replies.setdefault(parent, []).append(uid)
+        ordered: list[str] = []
+        stack = list(reversed(replies.get(None, [])))
+        while stack:
+            uid = stack.pop()
+            ordered.append(uid)
+            stack.extend(reversed(replies.get(uid, [])))
+        return ordered
+
+    def _overview(self) -> list[tuple[str, str]]:
+        """One row per result, so a missing result is stated instead of dropped."""
+
+        def missing(component: str) -> str:
+            status = self.components.get(component)
+            return "failed" if status and status.state == "failed" else "not available"
+
+        evidence = list(self.evidence.values())
+        total = len(evidence)
+        dates = sorted(e.created_at.date() for e in evidence if e.created_at is not None)
+        if not dates:
+            period = "not recorded in the source"
+        elif dates[0] == dates[-1]:
+            period = dates[0].isoformat()
+        else:
+            period = f"{dates[0].isoformat()} to {dates[-1].isoformat()}"
+        if any(e.metadata.get("speaker_missing") for e in evidence):
+            participants = "not recorded in the source"
+        else:
+            participants = str(len({e.speaker_id for e in evidence}))
+        labeled = sum(e.discourse_act is not None for e in evidence)
+        themes = len(set(self.topic_assignments.values()))
+        quality = self.conversation_quality
+        return [
+            ("Comments analyzed", str(total)),
+            ("Comments quoted", str(len(self._cited_ids()))),
+            ("Participants", participants),
+            ("Dates", period),
+            (
+                "Themes",
+                f"{themes} ({len(self.topic_assignments)} of {total} comments assigned)"
+                if themes
+                else missing("clustering"),
+            ),
+            (
+                "Discourse labels",
+                f"{labeled} of {total} comments" if labeled else missing("discourse"),
+            ),
+            (
+                "Civility estimate",
+                f"{quality.value:.2f} probability that the thread stays civil "
+                f"(model {_code(quality.model_name).replace('|', '&#124;')}, from {len(quality.evidence_ids)} comments)"
+                if quality
+                else missing("quality"),
+            ),
+        ]
+
+    def _add_claims(self, lines: list[str], claims: list[Claim]) -> None:
+        if not claims:
+            lines.extend(["No supported excerpts selected.", ""])
+        for claim in claims:
+            # Mark a quotation that starts or stops inside the source comment.
+            source = self.evidence[claim.evidence_ids[0]].text_clean
+            start = source.find(claim.text)
+            text = _escape(claim.text)
+            if start > 0:
+                text = "… " + text
+            if start + len(claim.text) < len(source):
+                text += " …"
+            citations = ", ".join(_cite(uid) for uid in claim.evidence_ids)
+            lines.extend([f"> {text}", ">", f"> Source: {citations}", ""])
+
+
+def _cite(uid: str) -> str:
+    return f"[{_escape(uid)}](#evidence-{quote(uid, safe='')})"
 
 
 def _escape(text: str) -> str:
