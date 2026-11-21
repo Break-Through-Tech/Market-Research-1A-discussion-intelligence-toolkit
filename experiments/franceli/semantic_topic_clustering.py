@@ -13,6 +13,7 @@ import json
 import random
 from pathlib import Path
 
+import joblib
 import numpy as np
 from sentence_transformers import SentenceTransformer
 from sklearn.cluster import MiniBatchKMeans
@@ -320,14 +321,36 @@ def export_comparisons(comparisons):
         newline="",
         encoding="utf-8",
     ) as file:
-
         writer = csv.DictWriter(
             file,
             fieldnames=["k", "silhouette_score"],
         )
-
         writer.writeheader()
         writer.writerows(comparisons)
+
+
+def save_trained_model(model, k, embedding_dimensions):
+    # Save the fitted clustering model, not only topic assignments.
+    model_dir = OUTPUT / "models"
+    model_dir.mkdir(parents=True, exist_ok=True)
+
+    model_path = model_dir / "semantic_kmeans.joblib"
+    joblib.dump(model, model_path)
+
+    metadata = {
+        "embedding_model": MODEL_NAME,
+        "selected_k": int(k),
+        "embedding_dimensions": int(embedding_dimensions),
+        "normalize_embeddings": True,
+        "random_seed": SEED,
+        "method": "Sentence Transformers + MiniBatchKMeans",
+    }
+    with (model_dir / "model_metadata.json").open(
+        "w", encoding="utf-8"
+    ) as file:
+        json.dump(metadata, file, indent=2)
+
+    print(f"Saved trained semantic clustering model: {model_path}")
 
 
 # --------------------------------------------------
@@ -364,6 +387,7 @@ def main():
     ) = evaluate_models(embeddings)
 
     export_comparisons(comparisons)
+    save_trained_model(best_model, best_k, embeddings.shape[1])
 
     export_topic_summary(
         records,
@@ -408,6 +432,8 @@ def main():
     print("- topic_summary.csv")
     print("- utterance_topics.csv")
     print("- run_config.json")
+    print("- models/semantic_kmeans.joblib")
+    print("- models/model_metadata.json")
 
 
 if __name__ == "__main__":
