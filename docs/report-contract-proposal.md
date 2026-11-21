@@ -16,7 +16,7 @@ November 14, 2026. This proposal documents the **existing** `InsightReport` vers
 | Limits and missing data | `limitations`, nullable evidence dates/URLs, metadata flags | Missing timestamps/authors are disclosed. The shared unknown-speaker placeholder must not be counted as distinct people. Report evidence retains provenance, including reference annotations. |
 | Unresolved questions | `open_questions` | Empty in the current implementation. No inference of consensus, resolution or unanswered status is supported. |
 
-The sample [karma report](../examples/karma-report.md) is actual current CLI output from the second reference thread. It retains "THIS IS BASED ON SPECULATION", shows unavailable models, and includes all 4 usable evidence utterances with thread links. It does not claim these explanations are correct or consensual. The original [build report](../examples/buildapc-report.md) remains byte-identical.
+The sample [karma report](../examples/karma-report.md) is actual current CLI output from the second reference thread. It retains "THIS IS BASED ON SPECULATION", shows unavailable models, and lists the quoted comments and their parents with thread links. It does not claim these explanations are correct or consensual. Both Markdown examples were regenerated for the layout in [report-format.md](report-format.md); the JSON examples are unchanged.
 
 ```bash
 uv run --offline discussion-intelligence \

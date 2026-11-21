@@ -139,7 +139,7 @@ uv run --offline python examples/synthesis_provider_demo.py --mode fabricated
 
 The second command demonstrates rejection of an unsupported claim and safe extractive fallback using a deterministic mock; **no LLM executes**. `--mode quote` demonstrates an accepted quotation, and `--mode error` demonstrates a provider exception.
 
-For Gia's #26 review, see the [proposed report contract](docs/report-contract-proposal.md), [JSON Schema snapshot](examples/insight-report.schema.json), and [actual karma sample report](examples/karma-report.md). Report v1 fields, presentation and exact-quotation policy remain unchanged. The [November team audit](docs/november-team-audit.md) separates implemented code from pending artifacts and owner decisions.
+The report layout decided in #26 is described in [docs/report-format.md](docs/report-format.md), with a [full example](examples/full-report-example.md). It builds on the [report contract](docs/report-contract-proposal.md), [JSON Schema snapshot](examples/insight-report.schema.json), and [actual karma sample report](examples/karma-report.md). Report v1 fields and the exact-quotation policy remain unchanged. The [November team audit](docs/november-team-audit.md) separates implemented code from pending artifacts and owner decisions.
 
 ## Repository map
 
