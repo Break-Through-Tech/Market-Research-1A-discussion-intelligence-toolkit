@@ -31,7 +31,5 @@ class SemanticTopicClusterer:
 
         return {
             utterance.id: str(int(topic_id))
-            for utterance, topic_id in zip(
-                utterances, predictions, strict=True
-            )
+            for utterance, topic_id in zip(utterances, predictions, strict=True)
         }
