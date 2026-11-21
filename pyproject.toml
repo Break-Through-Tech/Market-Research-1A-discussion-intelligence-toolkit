@@ -20,6 +20,10 @@ dependencies = [
 embeddings = ["sentence-transformers>=3,<6"]
 reddit = ["pandas>=2.2,<4", "pyarrow>=17", "requests>=2.32"]
 corpora = ["convokit>=3,<5"]
+llm = [
+    "google-genai>=3.6.1",
+    "openai>=3.51.0",
+]
 
 [project.scripts]
 discussion-intelligence = "discussion_intelligence.cli:main"

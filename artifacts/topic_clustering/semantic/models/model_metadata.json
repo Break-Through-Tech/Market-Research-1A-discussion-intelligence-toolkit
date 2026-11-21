@@ -1,0 +1,8 @@
+{
+  "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+  "selected_k": 16,
+  "embedding_dimensions": 384,
+  "normalize_embeddings": true,
+  "random_seed": 42,
+  "method": "Sentence Transformers + MiniBatchKMeans"
+}

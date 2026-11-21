@@ -194,3 +194,35 @@ Read [Challenge-Project-Overview.md](Challenge-Project-Overview.md) for advisor 
 ## License
 
 License decision pending advisor and program approval. No license is added by this integration.
+
+## Combined model demonstration
+
+Run the toolkit with the trained MiniLM topic clustering model
+and evidence-grounded reporting:
+
+```bash
+uv sync --locked --extra embeddings --extra llm
+uv run --extra embeddings --extra llm python examples/combined_demo.py
+```
+
+The first run downloads the free MiniLM embedding model.
+The demo generates JSON and Markdown reports from two real
+Reddit discussions. No API key is required by default.
+
+To enable live Gemini synthesis, configure your own
+GEMINI_API_KEY environment variable and run:
+
+```bash
+uv run --extra embeddings --extra llm python examples/combined_demo.py --gemini
+```
+
+Never commit API keys. Gemini availability is subject to API quotas.
+
+Topic clustering was developed by Franceli Gonzalez.
+LLM synthesis was developed by Aisha Mouss.
+Pipeline integration was coordinated by Rohan Verma.
+
+The current clustering model is experimental. Topic IDs are
+numeric, and clustering quality still requires improvement.
+Discourse classification and civility scoring require additional
+fitted model integration.
