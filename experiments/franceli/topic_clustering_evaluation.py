@@ -150,7 +150,7 @@ def build_term_matrix(models, texts):
         lowercase=True,
         binary=True,
         ngram_range=(1, 2),
-        dtype=np.int32,
+        dtype=np.int64,
     )
 
     matrix = vectorizer.transform(documents)
