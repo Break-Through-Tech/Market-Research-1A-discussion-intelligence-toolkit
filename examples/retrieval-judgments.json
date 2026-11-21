@@ -1,0 +1,85 @@
+{
+  "name": "November reference retrieval review v1",
+  "scope": "Curated evaluation on two already inspected reference threads; NOT a held-out or representative benchmark.",
+  "curation_note": "Agent-authored judgments from direct source inspection on 2026-11-14, pending Franceli/team review. Relevant replies supply the requested explanation or recommendation; the root merely asking the question is excluded. Quotes justify each proposed label, not the objective truth of source claims. No discourse gold labels or model predictions were used. Queries and labels were written before measuring this set.",
+  "source_sha256": "53be6730d7043963bb78647c69a84d377f371081a0e0b82df9e188f57fc943a0",
+  "cases": [
+    {
+      "id": "build-raid",
+      "conversation_id": "reddit:t3_10r2f8",
+      "query": "RAID data drives",
+      "rationale": "Find the reply explaining RAID-related drive-failure risk, rather than the root asking about a build.",
+      "relevant": [{"id": "reddit:t1_c6fwalq", "quote": "Never use RAID-0 for your data drives", "rationale": "This reply explicitly discusses drive-failure risk and RAID alternatives."}]
+    },
+    {
+      "id": "build-memory-multiple",
+      "conversation_id": "reddit:t3_10r2f8",
+      "query": "8GB RAM 16GB",
+      "rationale": "Both replies recommend a smaller memory configuration; retrieving only one is incomplete under this intent.",
+      "relevant": [
+        {"id": "reddit:t1_c6fwamd", "quote": "dropping to 8GB of RAM instead of 16", "rationale": "Makes the first explicit memory reduction recommendation."},
+        {"id": "reddit:t1_c6fwdkh", "quote": "changing to 8GB, 16GB is definitely superfluous.", "rationale": "Repeats the smaller-memory recommendation later in the reply chain."}
+      ]
+    },
+    {
+      "id": "build-clock",
+      "conversation_id": "reddit:t3_10r2f8",
+      "query": "higher base clock Sapphire",
+      "rationale": "Find the explanation of the graphics-card price/performance difference.",
+      "relevant": [{"id": "reddit:t1_c6fwmq5", "quote": "higher base clock than the other 7970s.", "rationale": "The reply explains clock speed and mentions a similarly priced MSI alternative."}]
+    },
+    {
+      "id": "build-semantic-paraphrase",
+      "conversation_id": "reddit:t3_10r2f8",
+      "query": "graphics upgrade worth extra cost",
+      "rationale": "A paraphrase of the card-value question; substantive evidence is the clock-speed and price explanation, not the unanswered question itself.",
+      "relevant": [{"id": "reddit:t1_c6fwmq5", "quote": "There's another MSI card that's around the same price as the Sapphire", "rationale": "Provides the performance/pricing information needed to assess the proposed upgrade; does not itself establish which choice is best."}]
+    },
+    {
+      "id": "karma-effort",
+      "conversation_id": "reddit:t3_169c79",
+      "query": "external website earned",
+      "rationale": "Find the participant's proposed external-site effort explanation, retaining its speculation qualifier.",
+      "relevant": [{"id": "reddit:t1_c7twpl2", "quote": "since you have to visit an external website.", "rationale": "Only this reply offers external-site effort as an explanation; it explicitly calls its claim speculation."}]
+    },
+    {
+      "id": "karma-links",
+      "conversation_id": "reddit:t3_169c79",
+      "query": "sharing links discussion forum",
+      "rationale": "Find the explanation based on Reddit's link-sharing purpose.",
+      "relevant": [{"id": "reddit:t1_c7twpcx", "quote": "Reddit is based around sharing links.", "rationale": "This reply argues that link sharing distinguishes the site from a discussion forum."}]
+    },
+    {
+      "id": "karma-abundance",
+      "conversation_id": "reddit:t3_169c79",
+      "query": "comment karma easier",
+      "rationale": "Find the explanation based on comment karma being more abundant and easier to obtain.",
+      "relevant": [{"id": "reddit:t1_c7twyqu", "quote": "Since more of it is being given out, it follows that it is easier to get and thus inferior.", "rationale": "Only this reply makes the abundance/ease argument; this is a participant's opinion, not a verified finding."}]
+    },
+    {
+      "id": "karma-explanations-multiple",
+      "conversation_id": "reddit:t3_169c79",
+      "query": "Why is comment karma considered inferior to link karma?",
+      "rationale": "The broad question has three different participant explanations; all three replies are relevant, without implying consensus.",
+      "relevant": [
+        {"id": "reddit:t1_c7twpl2", "quote": "link karma is usually more hard earned than comment karma", "rationale": "Supplies the effort explanation, explicitly labeled speculation in the source."},
+        {"id": "reddit:t1_c7twpcx", "quote": "Reddit is based around sharing links.", "rationale": "Supplies the site's link-sharing purpose as a distinct explanation."},
+        {"id": "reddit:t1_c7twyqu", "quote": "it is easier to get and thus inferior.", "rationale": "Supplies the abundance/ease explanation as a distinct participant view."}
+      ]
+    },
+    {
+      "id": "build-no-answer",
+      "conversation_id": "reddit:t3_10r2f8",
+      "query": "quantum entanglement",
+      "rationale": "Source inspection of all seven utterances finds no discussion of quantum entanglement.",
+      "relevant": []
+    },
+    {
+      "id": "karma-no-answer-overlap",
+      "conversation_id": "reddit:t3_169c79",
+      "query": "karma password reset",
+      "rationale": "All four utterances discuss karma value, but none gives password-reset help. Shared karma vocabulary must not be mistaken for an answer.",
+      "relevant": []
+    }
+  ]
+}

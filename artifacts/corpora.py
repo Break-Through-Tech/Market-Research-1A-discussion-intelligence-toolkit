@@ -230,10 +230,13 @@ class CgaCmvLoader:
 
     6,842 CMV threads with binary derailment labels at the conversation level.
     Each example is one thread, with text aggregated from the first `n_utterances`
-    comments (default 4 — enough context, before the derailment usually fires).
-    Label is 'derailed' or 'civil'.
+    comments (default 4), AFTER excluding the final outcome comment from both
+    civil and derailed threads. Label is 'derailed' or 'civil'. Short threads
+    previously included the removed outcome and leaked the target label.
 
-    Splits are produced by hashing `conversation_id` (same as Coarse Discourse).
+    Splits hash a matched-pair key when pair_id is present, otherwise the
+    conversation ID. For benchmark reproduction use the official-split quality
+    loader proposed in PR #22; this starter keeps its historical hash policy.
     Note: the corpus is balanced by design (pairs of awry/non-awry threads
     matched on opener), so train/dev/test stay roughly balanced too.
     """
@@ -247,6 +250,8 @@ class CgaCmvLoader:
         test_frac: float = 0.1,
         seed: int = 42,
     ) -> None:
+        if n_utterances < 1:
+            raise ValueError("n_utterances must be positive")
         self.n_utterances = n_utterances
         self.dev_frac = dev_frac
         self.test_frac = test_frac
@@ -257,7 +262,7 @@ class CgaCmvLoader:
         examples = list(self._iter_examples(corpus))
         splits = split_by_group(
             examples,
-            group_key=lambda ex: ex.metadata["conversation_id"],
+            group_key=lambda ex: ex.metadata["pair_group_id"],
             dev_frac=self.dev_frac,
             test_frac=self.test_frac,
             seed=self.seed,
@@ -283,8 +288,29 @@ class CgaCmvLoader:
 
     def _iter_examples(self, corpus: Any) -> Iterator[ClassificationExample]:
         for conv in corpus.iter_conversations():
-            # Take the first n_utterances in chronological order
-            utts = sorted(conv.iter_utterances(), key=lambda u: u.timestamp or 0)[: self.n_utterances]
+            # ConvoKit CGA-CMV is a linear reply chain. Following the tree
+            # resolves tied/missing timestamps without guessing the outcome
+            # from text or label. Fail closed on incomplete/branched chains.
+            chain = list(conv.iter_utterances())
+            if not chain:
+                continue
+            children: dict[str | None, list[Any]] = {}
+            for u in chain:
+                children.setdefault(u.reply_to, []).append(u)
+            if len(children.get(None, [])) != 1 or any(len(v) > 1 for v in children.values()):
+                raise ValueError(f"CGA-CMV conversation {conv.id} must be a linear reply chain")
+            ordered, seen = [], set()
+            current = children[None][0]
+            while current.id not in seen:
+                ordered.append(current)
+                seen.add(current.id)
+                following = children.get(current.id)
+                if not following:
+                    break
+                current = following[0]
+            if len(ordered) != len(chain):
+                raise ValueError(f"CGA-CMV conversation {conv.id} has disconnected/cyclic replies")
+            utts = ordered[:-1][: self.n_utterances]
             if not utts:
                 continue
             text = "\n\n".join((u.text or "").strip() for u in utts if u.text)
@@ -297,7 +323,10 @@ class CgaCmvLoader:
                 label="derailed" if derailed else "civil",
                 metadata={
                     "conversation_id": conv.id,
+                    "pair_id": conv.meta.get("pair_id"),
+                    "pair_group_id": min(str(conv.id), str(conv.meta.get("pair_id") or conv.id)),
                     "n_utterances_used": len(utts),
+                    "outcome_excluded": True,
                 },
             )
 
