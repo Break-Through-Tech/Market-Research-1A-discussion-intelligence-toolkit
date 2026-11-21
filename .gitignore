@@ -20,3 +20,6 @@ dist/
 *.safetensors
 .env
 .env.*
+
+# Generated topic clustering outputs
+/artifacts/topic_clustering/
