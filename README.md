@@ -97,6 +97,20 @@ flowchart TD
 
 Component statuses distinguish unavailable models from failed models. The pipeline never creates default labels, quality scores, or embeddings. A conversation civility estimate is stored separately from the canonical per-utterance argument-quality slot. Agreement/disagreement/question excerpts require supplied or predicted discourse labels; these do not establish consensus, targets of disagreement, or unanswered questions. `open_questions` remains empty.
 
+| Path | Purpose | Owner |
+|---|---|---|
+| `Challenge-Project-Overview.md` | Challenge brief, milestones, resources, advisor expectations | Challenge Advisor |
+| `Getting-Started-for-Fellows.md` | BTT orientation and initial repo guidance | Challenge Advisor / Fellows |
+| `README.md` | Living project home, progress log, and final portfolio artifact | Fellows |
+| `notebooks/` | EDA, modeling, evaluation, and demo notebooks | Fellows |
+| `utils/` | Helper modules, including `utils/modeling_data/` (modeling datasets and splits) and `utils/quality/` (quality scoring and embeddings) | Fellows |
+| `data/` | Small metadata files, data dictionaries, links to external datasets, and tracked split manifests in `data/splits/` | Fellows |
+| `docs/` | Design notes, e.g. `docs/modeling-datasets.md` and `docs/quality-scoring.md` | Fellows |
+| `tests/` | Pytest suite (`uv run --no-project --with pydantic --with pytest pytest tests`) | Fellows |
+| `pyproject.toml` / `uv.lock` | Python package metadata, dependency groups, and locked environment once package scaffolding is added | Fellows |
+| `requirements.txt` | Legacy scaffold file from the template; migrate dependencies to `pyproject.toml` and `uv.lock` before adding project packages | Fellows |
+| `.gitignore` | Files that must stay out of version control | Fellows |
+
 ## Connecting fitted models
 
 See [integration contracts](docs/integration-contracts.md) and the executable [artifact example](examples/fitted_model_integration.py). The pipeline never imports training experiments or calls `fit()`.
@@ -175,6 +189,8 @@ At the audit base `e734489`, the original tests passed **36/36**. Franceli repor
 
 ## Development and evaluation
 
+The Coarse Discourse modeling splits, label mapping, and leakage checks are documented in `docs/modeling-datasets.md`. The CGA-CMV quality target, context rules, and pair-preserving splits are documented in `docs/quality-scoring.md`.
+
 ```bash
 uv sync --locked
 uv run --offline ruff check src/discussion_intelligence tests/integration examples/fitted_model_integration.py
@@ -188,6 +204,81 @@ CI runs lint, tests, the reference demo, and package builds on Python 3.11–3.1
 The starter `CgaCmvLoader` now follows a linear reply chain, excludes the final outcome before taking the context limit, and hashes a shared pair key when available. This intentionally changes leaky short-thread examples and some hash split assignments. Malformed chains raise instead of guessing an outcome. It does not replace Gia's official-split benchmark loader or reproduce PR #22's metrics.
 
 Before December, export/version fitted model artifacts, integrate reviewed clustering and quality work, and evaluate retrieval recall@k plus human-reviewed report coverage and citation usefulness on held-out threads. Exact quotations establish source attribution, not factual correctness, completeness, or human-rated summary quality.
+
+1. Majority-class or constant-score baseline.
+2. TF-IDF plus logistic regression or linear regression.
+3. Sentence-transformer embeddings plus a simple classifier, regressor, or clustering model.
+4. Fine-tuned DistilBERT or another compact transformer for supervised tasks.
+5. Retrieval-grounded LLM synthesis after evidence extraction and retrieval are working.
+
+Document each model experiment:
+
+| Date | Task | Model | Data Split | Metric | Result | Notes |
+|---|---|---|---|---|---:|---|
+| 2026-10-31 | Quality scoring (CGA-CMV civility) | Length + logistic regression | Official test (1,364 threads) | ROC-AUC | 0.559 | Shape-only baseline; constant scorer is 0.500 |
+| 2026-10-31 | Quality scoring (CGA-CMV civility) | TF-IDF + logistic regression | Official test (1,364 threads) | ROC-AUC | 0.611 | Spearman 0.192, Brier 0.241 |
+| 2026-10-31 | Quality scoring (CGA-CMV civility) | all-MiniLM-L6-v2 embeddings + logistic regression | Official test (1,364 threads) | ROC-AUC | 0.647 | Spearman 0.255, Brier 0.234 |
+| 2026-10-31 | Quality scoring (CGA-CMV civility) | all-mpnet-base-v2 embeddings + logistic regression | Official test (1,364 threads) | ROC-AUC | 0.664 | Spearman 0.283, Brier 0.230; see `docs/quality-scoring.md` |
+
+## Evaluation Plan
+
+Use task-specific metrics. Do not rely on generic accuracy alone.
+
+| Component | Primary Metrics | What the Metric Checks |
+|---|---|---|
+| Discourse-act classifier | Macro F1, per-class F1, confusion matrix | Whether minority discourse labels are handled well |
+| Quality scorer | MAE, Spearman correlation | Whether predicted scores match level and ranking |
+| Topic clustering | Silhouette score, sampled cluster coherence review | Whether clusters are separated and interpretable |
+| Retrieval | Recall@k on hand-written thread questions | Whether cited evidence can be retrieved |
+| LLM synthesis | Claim coverage, evidence-link accuracy, hallucination rate | Whether reports are useful and grounded |
+
+For the final system, build a small held-out set of manually reviewed threads. Score final reports against human-written insight digests for claim coverage, evidence accuracy, and hallucination rate.
+
+## Results and Key Findings
+
+Update this section throughout the project. Include both successful and failed experiments when they changed the team’s direction.
+
+Recommended result artifacts:
+
+- EDA charts for thread size, depth, score, and label distributions
+- baseline metrics before transformer fine-tuning
+- final model comparison table
+- error analysis examples
+- retrieval examples showing query, retrieved comments, and missing evidence
+- final insight-report examples with cited utterance IDs
+
+## Final Demo Requirements
+
+The final demo should show the complete path from input thread to structured report:
+
+1. Load or ingest a threaded discussion.
+2. Normalize it into the canonical conversation schema.
+3. Run discourse, quality, embedding, clustering, and retrieval components.
+4. Generate an insight report.
+5. Show that each major claim links back to source comments.
+6. Explain the evaluation results and remaining limitations.
+
+The demo should run on student-accessible compute such as Google Colab.
+
+## Milestones
+
+| Month | Focus | Expected Outcomes |
+|---|---|---|
+| September | Data understanding and baselines | EDA, cleaned schema, baseline models, initial evaluation harness |
+| October | Modeling | Discourse classifier, quality scorer, topic clustering, model comparisons |
+| November | Integration | End-to-end `analyze(thread)` pipeline, retrieval, LLM synthesis, package structure |
+| December | Polish and presentation | Final report, reproducible demo, recorded walkthrough, documented next steps |
+
+## Next Steps
+
+Track project-specific next steps here. Early candidates:
+
+- Select target subreddit or discussion-domain verticals.
+- Define the canonical conversation schema.
+- Build or adopt a starter connector.
+- Run first EDA on reconstructed threads.
+- Establish baseline metrics before fine-tuning.
+- Decide how final reports will cite supporting utterances.
 
 Read [Challenge-Project-Overview.md](Challenge-Project-Overview.md) for advisor expectations and monthly milestones. Training, dataset, and report changes should remain reviewable through issues and draft PRs.
 
