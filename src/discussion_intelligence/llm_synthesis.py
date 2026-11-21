@@ -105,3 +105,35 @@ def create_openai_provider(
         return response.output_text
 
     return LLMSynthesisProvider(generate=generate)
+
+
+######## added this for google gemini
+
+
+def create_gemini_provider(
+    model: str = "gemini-3.5-flash-lite",
+    client=None,
+) -> LLMSynthesisProvider:
+    """Create an LLM synthesis provider backed by Google Gemini."""
+
+    if client is None:
+        from google import genai
+
+        client = genai.Client()
+
+    def generate(prompt: str) -> str:
+        response = client.models.generate_content(
+            model=model,
+            contents=prompt,
+            config={
+                "response_mime_type": "application/json",
+                "temperature": 0,
+            },
+        )
+
+        if not response.text:
+            raise ValueError("Gemini returned an empty response")
+
+        return response.text
+
+    return LLMSynthesisProvider(generate=generate)
